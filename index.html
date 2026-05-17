@@ -3,350 +3,548 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammed Muneer - IT Engineer CV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* إعدادات المتغيرات والألوان الفخمة */
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --accent-gold: #fbbf24;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    <link class="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+        /* أنيميشن عند تحميل الصفحة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    <link rel="stylesheet" href="assets/css/styles.min.css">
+        @keyframes scaleUp {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-    <title>Mohammed Muneer - Portfolio</title>
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            animation: scaleUp 0.8s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* الكروت والبطاقات العامة */
+        .card {
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(251, 191, 36, 0.1);
+        }
+
+        /* العمود الجانبي (الأيسر) */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* الصورة الشخصية الدائرية الفخمة */
+        .profile-section {
+            text-align: center;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+        }
+
+        .avatar-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid var(--accent-gold);
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+            transition: var(--transition-smooth);
+            background: #1e293b; /* خلفية افتراضية في حال لم تضع صورة بعد */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* أيقونة مستخدم افتراضية فخمة تظهر إذا لم يتم تحديد مسار صورة */
+        .avatar-frame i {
+            font-size: 5rem;
+            color: var(--text-muted);
+        }
+
+        .avatar-container:hover .avatar-frame {
+            transform: rotate(5deg) scale(1.05);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+        }
+
+        .profile-section h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-section .subtitle {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        /* معلومات التواصل */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .contact-item:hover {
+            color: var(--accent-gold);
+            transform: translateX(5px);
+        }
+
+        .contact-item i {
+            color: var(--accent-gold);
+            width: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* العناوين الداخلية للأقسام */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--accent-gold);
+        }
+
+        .section-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(251, 191, 36, 0.5), transparent);
+            margin-left: 10px;
+        }
+
+        /* المهارات والسمات الشخصية */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition-smooth);
+        }
+
+        .tag:hover {
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            transform: scale(1.05);
+        }
+
+        /* العمود الأساسي (الأيمن) */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .profile-summary {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-align: justify;
+        }
+
+        /* الخط الزمني للخبرات والتعليم */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid rgba(251, 191, 36, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .timeline-item {
+            position: relative;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent-gold);
+            box-shadow: 0 0 10px var(--accent-gold);
+            transition: var(--transition-smooth);
+        }
+
+        .timeline-item:hover::before {
+            transform: scale(1.3);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .timeline-role {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .timeline-company {
+            font-size: 0.95rem;
+            color: var(--accent-gold);
+            font-weight: 500;
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+
+        .timeline-body {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-body ul {
+            list-style: none;
+            margin-top: 8px;
+        }
+
+        .timeline-body ul li {
+            position: relative;
+            padding-left: 15px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-body ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+        }
+
+        /* شبكة لعرض الكورسات واللغات بشكل منظم */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .course-item {
+            margin-bottom: 12px;
+        }
+        .course-title {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .course-meta {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+        }
+    </style>
 </head>
 <body>
 
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="#" class="nav__logo">MUNEER</a>
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list grid">
-                    <li class="nav__item">
-                        <a href="#home" class="nav__link active-link">
-                            <i class="ri-home-smile-2-line"></i>Home
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#skills" class="nav__link">
-                            <i class="ri-trophy-line"></i>Skills
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#qualification" class="nav__link">
-                            <i class="ri-book-open-line"></i>Qualification
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#services" class="nav__link">
-                            <i class="ri-briefcase-line"></i>Services
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#contact" class="nav__link">
-                            <i class="ri-chat-3-line"></i>Contact
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="nav__close" id="nav-close">
-                    <i class="ri-close-line"></i>
-                </div>
-            </div>
-
-            <div class="nav__buttons">
-                <i class="ri-moon-line change-theme" id="theme-button"></i>
-
-                <div class="nav__toggle" id="nav-toggle">
-                    <i class="ri-menu-4-line"></i>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="main">
-        <section class="home section" id="home">
-            <div class="home__container container grid section section__border">
-                <div class="home__data grid">
-                    <h1 class="home__title">
-                        Hi, I’m Mohammed <br>
-                        IT Engineer & DBA <br>
-                        Based In Jeddah <br>
-                    </h1>
-                    <div class="home__blob grid">
-                        <div class="home__perfil">
-                            <img src="assets/img/perfil1.png" alt="Mohammed Muneer Perfil">
-                        </div>
-                        <img src="assets/img/shape-wawes.svg" alt="shape waves" class="home__shape-wawes">
-                        <img src="assets/img/shape-circle.svg" alt="shape circle" class="home__shape-circle">
-                    </div>
-
-                    <ul class="home__social">
-                        <a href="https://www.linkedin.com/in/mohammed-al-khulaidi-696885393" target="_blank" class="home__social-link">
-                            <i class="ri-linkedin-box-line"></i>
-                        </a>
-                    </ul>
-                </div>
-
-                <div class="home__info">
-                    <div>
-                        <h3 class="home__info-title">BIOGRAPHY</h3>
-                        <p class="home__info-description">
-                            Highly motivated and results-driven Information Technology Engineer with robust expertise in Oracle Database administration, PL/SQL development, and advanced backend web architectures using the Laravel framework. Proven experience in enterprise ERP systems (Onyx iX).
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 class="home__info-title">CONTACT</h3>
-                        <p class="home__info-description">
-                            Saudi Arabia - Jeddah <br>
-                            mohammedmuneer5577@gmail.com <br>
-                            +966 553929565 <br>
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 class="home__info-title">SERVICES</h3>
-                        <p class="home__info-description">
-                            Oracle Database Administration <br>
-                            Backend Web Development (Laravel) <br>
-                            ERP Technical Support (Onyx iX) <br>
-                        </p>
+    <div class="container">
+        
+        <aside class="sidebar">
+            
+            <div class="card profile-section">
+                <div class="avatar-container">
+                    <div class="avatar-frame">
+                        <img src="profile.jpg" alt="Mohammed Muneer" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fa-solid fa-user-gear" style="display:none;"></i>
                     </div>
                 </div>
-
-                <div class="home__info">
-                    <div>
-                        <h3 class="home__info-title">CURRENT ROLE</h3>
-                        <p class="home__info-number" style="font-size: var(--normal-font-size); font-weight: initial;">
-                            Technical Support Engineer <br> at Ultimate Solutions
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="skills section" id="skills">
-            <h2 class="section__title">Skills</h2>
-            <span class="section__subtitle">My Technical Skills</span>
-
-            <div class="skills__container container grid section__border">
+                <h1>MOHAMMED MUNEER</h1>
+                <div class="subtitle">Information Technology Engineer</div>
                 
-                <div class="skills__content">
-                    <h3 class="skills__title">
-                        <i class="ri-database-2-line"></i> Databases & Infrastructure
-                    </h3>
-
-                    <div class="skills__group grid">
-                        <div class="skills__data">
-                            <i class="ri-checkbox-circle-line"></i>
-                            <div>
-                                <h3 class="skills__name">Oracle (SQL/PLSQL)</h3>
-                                <span class="skills__level">Advanced</span>
-                            </div>
-                        </div>
-
-                        <div class="skills__data">
-                            <i class="ri-checkbox-circle-line"></i>
-                            <div>
-                                <h3 class="skills__name">Oracle DBA</h3>
-                                <span class="skills__level">Advanced</span>
-                            </div>
-                        </div>
-
-                        <div class="skills__data">
-                            <i class="ri-checkbox-circle-line"></i>
-                            <div>
-                                <h3 class="skills__name">MySQL</h3>
-                                <span class="skills__level">Intermediate</span>
-                            </div>
-                        </div>
-
-                        <div class="skills__data">
-                            <i class="ri-checkbox-circle-line"></i>
-                            <div>
-                                <h3 class="skills__name">VMware & Linux</h3>
-                                <span class="skills__level">Intermediate</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="contact-info">
+                    <span class="contact-item"><i class="fa-solid fa-calendar-days"></i>02-January-2000</span>
+                    <a href="tel:00966553929565" class="contact-item"><i class="fa-solid fa-phone"></i>00966553929565</a>
+                    <a href="mailto:mohammedmuneer5577@gmail.com" class="contact-item"><i class="fa-solid fa-envelope"></i>mohammedmuneer5577@gmail.com</a>
+                    <span class="contact-item"><i class="fa-solid fa-location-dot"></i>Saudi Arabia, Jeddah</span>
+                    <a href="https://www.linkedin.com/in/mohammed-al-khulaidi-696885393" target="_blank" class="contact-item"><i class="fa-brands fa-linkedin"></i>LinkedIn Profile</a>
                 </div>
-
-                <div class="skills__content">
-                    <h3 class="skills__title">
-                        <i class="ri-code-box-line"></i> Backend & Core
-                    </h3>
-
-                    <div class="skills__group grid">
-                        <div class="skills__data">
-                            <i class="ri-checkbox-circle-line"></i>
-                            <div>
-                                <h3 class="skills__name">Laravel Framework</h3>
-                                <span class="skills__level">Advanced</span>
-                            </div>
-                        </div>
-
-                        <div class="skills__data">
-                            <i class="ri-checkbox-circle-line"></i>
-                            <div>
-                                <h3 class="skills__name">PHP, HTML, CSS, JS</h3>
-                                <span class="skills__level">Intermediate</span>
-                            </div>
-                        </div>
-
-                        <div class="skills__data">
-                            <i class="ri-checkbox-circle-line"></i>
-                            <div>
-                                <h3 class="skills__name">Onyx iX ERP Support</h3>
-                                <span class="skills__level">Advanced</span>
-                            </div>
-                        </div>
-
-                        <div class="skills__data">
-                            <i class="ri-checkbox-circle-line"></i>
-                            <div>
-                                <h3 class="skills__name">Network Admin</h3>
-                                <span class="skills__level">Intermediate</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-        </section>
 
-        <section class="qualification section" id="qualification">
-            <h2 class="section__title">Qualification</h2>
-            <span class="section__subtitle">My Education & Experience</span>
+            <div class="card">
+                <h2 class="section-title"><i class="fa-solid fa-code"></i>Technical Skills</h2>
+                
+                <p style="font-size:0.85rem; color:var(--accent-gold); margin-bottom:5px; font-weight:500;">Databases</p>
+                <div class="tags-container" style="margin-bottom: 15px;">
+                    <span class="tag">Oracle Database (SQL, PL/SQL)</span>
+                    <span class="tag">Oracle DBA</span>
+                    <span class="tag">MySQL</span>
+                </div>
+
+                <p style="font-size:0.85rem; color:var(--accent-gold); margin-bottom:5px; font-weight:500;">Web Development</p>
+                <div class="tags-container" style="margin-bottom: 15px;">
+                    <span class="tag">Laravel Framework</span>
+                    <span class="tag">PHP (Backend)</span>
+                    <span class="tag">HTML5 / CSS3</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Bootstrap</span>
+                </div>
+
+                <p style="font-size:0.85rem; color:var(--accent-gold); margin-bottom:5px; font-weight:500;">Systems & Virtualization</p>
+                <div class="tags-container" style="margin-bottom: 15px;">
+                    <span class="tag">VMware ESXi</span>
+                    <span class="tag">Oracle Linux OS</span>
+                </div>
+
+                <p style="font-size:0.85rem; color:var(--accent-gold); margin-bottom:5px; font-weight:500;">Core Competencies & Design</p>
+                <div class="tags-container">
+                    <span class="tag">Network Administration</span>
+                    <span class="tag">ERP Technical Support</span>
+                    <span class="tag">Adobe Photoshop</span>
+                    <span class="tag">Adobe Illustrator</span>
+                    <span class="tag">Microsoft Office Suite</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><i class="fa-solid fa-heart"></i>Personal Traits</h2>
+                <div class="tags-container">
+                    <span class="tag"><i class="fa-solid fa-check" style="color:var(--accent-gold); margin-right:4px;"></i>Reliable</span>
+                    <span class="tag"><i class="fa-solid fa-check" style="color:var(--accent-gold); margin-right:4px;"></i>Adaptable</span>
+                    <span class="tag"><i class="fa-solid fa-check" style="color:var(--accent-gold); margin-right:4px;"></i>Motivated</span>
+                    <span class="tag"><i class="fa-solid fa-check" style="color:var(--accent-gold); margin-right:4px;"></i>Organized</span>
+                    <span class="tag"><i class="fa-solid fa-check" style="color:var(--accent-gold); margin-right:4px;"></i>Communicative</span>
+                    <span class="tag"><i class="fa-solid fa-check" style="color:var(--accent-gold); margin-right:4px;"></i>Problem-solving</span>
+                </div>
+            </div>
+
+        </aside>
+
+        <main class="main-content">
             
-            <div class="qualification__container container grid section__border">
-                <div class="qualification__content">
-                    <h3 class="qualification__title">
-                        <i class="ri-pencil-ruler-2-line"></i> Education
-                    </h3>
-                    <div class="qualification__info">
-                        <div>
-                            <h3 class="qualification__name">Bachelor in Information Technology</h3>
-                            <span class="qualification__country">University of Science and Technology</span>
-                            <span class="qualification__year">2023 - 2024</span>
+            <div class="card">
+                <h2 class="section-title"><i class="fa-solid fa-address-card"></i>Profile Information</h2>
+                <p class="profile-summary">
+                    Highly motivated and results-driven Information Technology Engineer with robust expertise in Oracle Database administration, PL/SQL development, and advanced backend web architectures using the Laravel framework. Proven experience providing professional technical support for enterprise-level ERP systems (Onyx iX) and managing virtualized server environments utilizing Oracle Linux and VMware ESXi. Proficient in network administration.
+                </p>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><i class="fa-solid fa-briefcase"></i>Work Experience</h2>
+                <div class="timeline">
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div>
+                                <div class="timeline-role">TECHNICAL SUPPORT ENGINEER</div>
+                                <div class="timeline-company">Ultimate Solutions</div>
+                            </div>
+                            <span class="timeline-date">12/2024 - Present</span>
                         </div>
-                        <div>
-                            <h3 class="qualification__name">Diploma of Accounting</h3>
-                            <span class="qualification__country">Professional Training</span>
-                            <span class="qualification__year">2023 - 2024</span>
+                        <div class="timeline-body">
+                            <ul>
+                                <li>Provide advanced technical support and system troubleshooting for the enterprise-level Onyx iX ERP system.</li>
+                                <li>Design, customize, and optimize system reports to meet diverse client business and financial requirements.</li>
+                                <li>Assist clients with database deployment, migration, and optimization tasks to ensure system reliability.</li>
+                                <li>Deliver professional consultation to end-users, ensuring smooth operations and high system availability.</li>
+                                <li>Collaborated with technical teams to troubleshoot database queries and resolve complex application errors.</li>
+                            </ul>
                         </div>
-                        <div>
-                            <h3 class="qualification__name">Cyber Security Course</h3>
-                            <span class="qualification__country">University of Science and Technology</span>
-                            <span class="qualification__year">07/2023 - 08/2023</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="section-title"><i class="fa-solid fa-graduation-cap"></i>Academic Qualification</h2>
+                <div class="timeline">
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div>
+                                <div class="timeline-role">University Graduate</div>
+                                <div class="timeline-company">University of Science and Technology - IT Department</div>
+                            </div>
+                            <span class="timeline-date">2023 - 2024</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div>
+                                <div class="timeline-role">Secondary School Graduate</div>
+                                <div class="timeline-company">26 September School - Scientific Section</div>
+                            </div>
+                            <span class="timeline-date">2017 - 2018</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="info-grid">
+                
+                <div class="card">
+                    <h2 class="section-title"><i class="fa-solid fa-certificate"></i>Professional Courses</h2>
+                    
+                    <div class="course-item">
+                        <div class="course-title">Diploma of Accounting</div>
+                        <div class="course-meta">2023 - 2024</div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-title">Cyber Security</div>
+                        <div class="course-meta">07/2023 - 08/2023 | University of Science and Technology</div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-title">Diploma of International Computer Driving License (ICDL)</div>
+                        <div class="course-meta">2021 - 2022 | University of Science and Technology</div>
+                    </div>
+
+                    <div class="course-item">
+                        <div class="course-title">Diploma of English</div>
+                        <div class="course-meta">2017 - 2018 | New Yemen Tech Institute</div>
+                    </div>
+                </div>
+
+                <div class="card" style="display: flex; flex-direction: column;">
+                    <h2 class="section-title"><i class="fa-solid fa-language"></i>Languages</h2>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <div style="display:flex; justify-content:space-between; font-size:0.95rem; margin-bottom:5px;">
+                            <span>Arabic</span>
+                            <span style="color:var(--accent-gold);">Native</span>
+                        </div>
+                        <div style="width:100%; height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;">
+                            <div style="width:100%; height:100%; background:var(--accent-gold); border-radius:10px;"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.95rem; margin-bottom:5px;">
+                            <span>English</span>
+                            <span style="color:var(--accent-gold);">Professional Working Proficiency</span>
+                        </div>
+                        <div style="width:100%; height:6px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden;">
+                            <div style="width:85%; height:100%; background:var(--accent-gold); border-radius:10px;"></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="qualification__content">
-                    <h3 class="qualification__title">
-                        <i class="ri-building-line"></i> Work Experience
-                    </h3>
-                    <div class="qualification__info">
-                        <div>
-                            <h3 class="qualification__name">Technical Support Engineer</h3>
-                            <span class="qualification__country">Ultimate Solutions</span>
-                            <span class="qualification__year">12/2024 - Present</span>
-                            <p style="font-size: var(--small-font-size); color: var(--text-color); margin-top: 0.5rem;">
-                                Advanced technical support, troubleshooting database queries, and system optimization for Onyx iX ERP.
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </section>
 
-        <section class="services section" id="services">
-            <h2 class="section__title">Services</h2>
-            <span class="section__subtitle">What I Offer</span>
-            
-            <div class="services__container container grid section__border">
-                <div class="services__card">
-                    <i class="ri-database-2-line"></i>
-                    <h2 class="services__title">Database <br> Administration</h2>
-                    <p class="services__description">
-                        Deployment, migration, and query optimization for Oracle and MySQL databases ensuring high availability and reliability.
-                    </p>
-                </div>
-
-                <div class="services__card">
-                    <i class="ri-code-line"></i>
-                    <h2 class="services__title">Enterprise ERP <br> Support</h2>
-                    <p class="services__description">
-                        Professional consultation, troubleshooting application errors, and optimizing system reports for Onyx iX ERP.
-                    </p>
-                </div>
-
-                <div class="services__card">
-                    <i class="ri-server-line"></i>
-                    <h2 class="services__title">Backend <br> Architecture</h2>
-                    <p class="services__description">
-                        Designing robust, secure, and scalable web architectures utilizing PHP and the Laravel framework.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="contact section" id="contact">
-            <h2 class="section__title">Contact Me</h2>
-            <span class="section__subtitle">Get in touch</span>
-            
-            <div class="contact__container container grid section__border">
-                <div class="contact__content">
-                    <h3 class="contact__title">
-                        <i class="ri-chat-3-line"></i> Talk to me
-                    </h3>
-                    <div class="contact__info">
-                        <div class="contact__data">
-                            <span class="contact__data-title">Email</span>
-                            <span class="contact__data-info">mohammedmuneer5577@gmail.com</span>
-                            <a href="mailto:mohammedmuneer5577@gmail.com" class="contact__button">
-                                Write me <i class="ri-arrow-right-line"></i>
-                            </a>
-                        </div>
-
-                        <div class="contact__data">
-                            <span class="contact__data-title">WhatsApp</span>
-                            <span class="contact__data-info">+966 553929565</span>
-                            <a href="https://api.whatsapp.com/send?phone=00966553929565&text=Hello%20Mohammed,%20I%20saw%20your%20portfolio!" target="_blank" class="contact__button">
-                                Write me <i class="ri-arrow-right-line"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact__content">
-                    <h3 class="contact__title">
-                        <i class="ri-send-plane-line"></i> Send a message
-                    </h3>
-                    <form class="contact__form" id="contact-form">
-                        <div class="contact__form-div">
-                            <label class="contact__form-tag">Name</label>
-                            <input class="contact__form-input" type="text" name="user_name" required placeholder="Write your name" id="contact-name">
-                        </div>
-
-                        <div class="contact__form-div">
-                            <label class="contact__form-tag">Mail</label>
-                            <input class="contact__form-input" type="email" name="user_email" required placeholder="Write your email" id="contact-email">
-                        </div>
-
-                        <div class="contact__form-div contact__form-area">
-                            <label class="contact__form-tag">Project / Message</label>
-                            <textarea class="contact__form-input" name="user_project" placeholder="Write your project details or message" id="contact-project"></textarea>
-                        </div>
-                        
-                        <button class="button">
-                            Send Message <i class="ri-send-plane-line"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
+        </main>
+    </div>
 
 </body>
 </html>
