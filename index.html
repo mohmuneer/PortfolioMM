@@ -319,7 +319,7 @@ header.nav{
 /* ============================================================
    9. PROJECTS
    ============================================================ */
-.proj-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+.proj-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
 .proj-card{
   background:var(--card); border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden;
   transition:transform .35s var(--ease), border-color .35s, box-shadow .35s;
@@ -338,8 +338,8 @@ header.nav{
 .proj-body p{ font-size:.9rem; color:var(--text-dim); flex:1; }
 .tag-row{ display:flex; flex-wrap:wrap; gap:8px; }
 .tag{ font-family:'IBM Plex Mono',monospace; font-size:.68rem; padding:4px 9px; border-radius:6px; background:var(--section); border:1px solid var(--border); color:var(--text-dim); }
-.proj-status{ display:flex; align-items:center; gap:8px; font-size:.78rem; color:var(--text-dim); margin-top:4px; }
-.proj-status i{ color:var(--success); }
+a.tag{ transition:transform .2s var(--ease), background .2s; display:inline-flex; align-items:center; }
+a.tag:hover{ transform:translateY(-2px); background:color-mix(in srgb, var(--wire) 12%, var(--section)); }
 
 /* ============================================================
    10. CERTS + ACHIEVEMENTS
@@ -418,7 +418,6 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
   .hero-visual{ order:-1; }
   .about-grid{ grid-template-columns:1fr; gap:40px; }
   .skill-groups{ grid-template-columns:1fr; }
-  .proj-grid{ grid-template-columns:repeat(2,1fr); }
   .cert-grid, .ach-grid{ grid-template-columns:repeat(2,1fr); }
   .why-grid{ grid-template-columns:repeat(2,1fr); }
   .contact-grid2{ grid-template-columns:1fr; }
@@ -445,18 +444,50 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 .mobile-nav a{ display:block; padding:16px 0; border-bottom:1px solid var(--border); font-family:'IBM Plex Mono',monospace; font-size:.95rem; }
 
 /* ============================================================
-   16. PRINT
+   16. ATS PRINT RESUME
+   A dedicated, plain, single-column A4 resume — completely
+   separate markup from the visual site, so what prints is
+   ATS-parsable (no icons, no color-only meaning, no tables,
+   no multi-column layout).
    ============================================================ */
+#printResume{ display:none; }
+
 @media print{
-  header.nav, #toTop, .mobile-nav, .console-bar span, .hero-btns, .icon-btn, .badge-float, .schema-dots{ display:none !important; }
-  body{ background:#fff !important; color:#111 !important; }
-  section{ padding:20px 0 !important; page-break-inside:avoid; }
-  .stat-card,.skill-card,.tl-card,.proj-card,.cert-card,.ach-card,.contact-card,.why-card{ border:1px solid #ccc !important; box-shadow:none !important; break-inside:avoid; }
-  a[href]::after{ content:" (" attr(href) ")"; font-size:.7em; }
+  @page{ size:A4; margin:14mm 16mm; }
+  html,body{ background:#fff !important; }
+  #siteWrap{ display:none !important; }
+  #printResume{
+    display:block !important;
+    color:#111827;
+    font-family:'Inter',Arial,Helvetica,sans-serif;
+    font-size:10.6pt;
+    line-height:1.5;
+  }
+  #printResume h1{ font-size:19pt; font-weight:800; letter-spacing:0; color:#0F172A; margin-bottom:4pt; }
+  #printResume .pr-title{ font-size:11pt; font-weight:600; color:#1E293B; margin-bottom:5pt; }
+  #printResume .pr-contact{ font-size:9.5pt; color:#334155; margin-bottom:12pt; }
+  #printResume .pr-header{ border-bottom:1.5pt solid #0F172A; padding-bottom:10pt; margin-bottom:14pt; }
+  #printResume .pr-section{ margin-bottom:13pt; page-break-inside:avoid; }
+  #printResume h2{
+    font-size:11.5pt; font-weight:800; text-transform:uppercase; letter-spacing:.06em;
+    color:#0F172A; border-bottom:.75pt solid #94A3B8; padding-bottom:3pt; margin-bottom:8pt;
+  }
+  #printResume p{ margin-bottom:5pt; }
+  #printResume .pr-item{ margin-bottom:9pt; page-break-inside:avoid; }
+  #printResume .pr-item-top{ display:flex; justify-content:space-between; font-size:10.6pt; }
+  #printResume .pr-item-top strong{ font-weight:700; }
+  #printResume .pr-item-top span{ font-weight:500; color:#334155; }
+  #printResume .pr-item-sub{ font-style:italic; color:#334155; margin-bottom:4pt; }
+  #printResume ul{ padding-left:14pt; list-style:disc; }
+  #printResume li{ margin-bottom:3pt; }
+  #printResume strong{ font-weight:700; }
+  #printResume a{ color:#111827; text-decoration:none; }
 }
 </style>
 </head>
 <body>
+
+<div id="siteWrap">
 
 <a href="#main" class="skip-link">Skip to content</a>
 
@@ -659,36 +690,61 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
     <div class="section-head reveal">
       <p class="eyebrow">BUILD</p>
       <h2>Selected builds</h2>
-      <p>Practice and coursework projects from my IT studies, built to sharpen the same Oracle and Laravel skills I use professionally. <em style="color:var(--text-dim); font-style:normal;">— replace with your live project details whenever you have them.</em></p>
+      <p>Live systems I designed and built end-to-end, each with multiple role-based portals — deployed and in real use.</p>
     </div>
     <div class="proj-grid reveal reveal-stagger">
+
       <div class="proj-card" style="--i:0">
+        <div class="proj-thumb"><i class="fa-solid fa-scissors"></i></div>
+        <div class="proj-body">
+          <h3>Salon &amp; Hair Studio Management System</h3>
+          <p>Full booking, staff and inventory management platform for salons, with dedicated apps for admins, customers and suppliers.</p>
+          <div class="tag-row"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Multi-portal</span></div>
+          <div class="tag-row" style="margin-top:2px;">
+            <a href="https://salon-admin-tau-rose.vercel.app/public" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Admin</a>
+            <a href="https://salon-customer-three.vercel.app/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Customer App</a>
+            <a href="https://salon-admin-tau-rose.vercel.app/supplier-portal/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Supplier Portal</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card" style="--i:1">
         <div class="proj-thumb"><i class="fa-solid fa-graduation-cap"></i></div>
         <div class="proj-body">
-          <h3>University ERP Module</h3>
-          <p>A coursework ERP module covering student records and reporting, built with Laravel on the backend and an Oracle/MySQL data layer.</p>
-          <div class="tag-row"><span class="tag">Laravel</span><span class="tag">Oracle SQL</span><span class="tag">PHP</span></div>
-          <div class="proj-status"><i class="fa-solid fa-lock"></i>Academic project — details on request</div>
+          <h3>University Management System</h3>
+          <p>A university-wide system for managing academic operations, with separate portals built for teaching staff and students.</p>
+          <div class="tag-row"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Multi-portal</span></div>
+          <div class="tag-row" style="margin-top:2px;">
+            <a href="https://ust-next.vercel.app/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Staff Login</a>
+            <a href="https://ust-next.vercel.app/student/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Student Login</a>
+          </div>
         </div>
       </div>
-      <div class="proj-card" style="--i:1">
-        <div class="proj-thumb"><i class="fa-solid fa-store"></i></div>
-        <div class="proj-body">
-          <h3>Salon Management System</h3>
-          <p>A booking and inventory practice build for a small-business use case, with a PL/SQL-backed schema for appointments and stock.</p>
-          <div class="tag-row"><span class="tag">PL/SQL</span><span class="tag">Laravel</span><span class="tag">Bootstrap</span></div>
-          <div class="proj-status"><i class="fa-solid fa-lock"></i>Practice project — details on request</div>
-        </div>
-      </div>
+
       <div class="proj-card" style="--i:2">
-        <div class="proj-thumb"><i class="fa-solid fa-boxes-stacked"></i></div>
+        <div class="proj-thumb"><i class="fa-solid fa-folder-tree"></i></div>
         <div class="proj-body">
-          <h3>Inventory &amp; Reporting System</h3>
-          <p>A stock-tracking build with custom Oracle reports, in the same spirit as the client report customization I do at Ultimate Solutions.</p>
-          <div class="tag-row"><span class="tag">Oracle DB</span><span class="tag">Reports</span><span class="tag">PHP</span></div>
-          <div class="proj-status"><i class="fa-solid fa-lock"></i>Practice project — details on request</div>
+          <h3>Wasl — Internal Issue &amp; Archive Tracker</h3>
+          <p>An internal system for logging and tracking company issues end-to-end, with full electronic document archiving.</p>
+          <div class="tag-row"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">E-Archiving</span></div>
+          <div class="tag-row" style="margin-top:2px;">
+            <a href="https://wasl.wuaze.com/?i=1" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live Demo</a>
+          </div>
         </div>
       </div>
+
+      <div class="proj-card" style="--i:3">
+        <div class="proj-thumb"><i class="fa-solid fa-mobile-screen-button"></i></div>
+        <div class="proj-body">
+          <h3>Task &amp; Document Archive App</h3>
+          <p>A mobile and web app for archiving files, memos and appointments, with built-in accounting entries to help organize daily tasks.</p>
+          <div class="tag-row"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Expo</span><span class="tag">Mobile</span></div>
+          <div class="tag-row" style="margin-top:2px;">
+            <a href="https://www.mediafire.com/file/j8vq546swbsbut4/application-7d08fe6f-d625-414e-9022-a80d6e0d9889.apk/file" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Download APK</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -845,6 +901,93 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 </footer>
 
 <button id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+</div><!-- /siteWrap -->
+
+<!-- ============================================================
+     ATS PRINT RESUME — plain, single-column, A4.
+     Hidden on screen; shown only inside @media print (see CSS).
+     ============================================================ -->
+<div id="printResume">
+  <div class="pr-header">
+    <h1>Mohammed Muneer</h1>
+    <p class="pr-title">Information Technology Engineer — Oracle Database &amp; Laravel Backend Development</p>
+    <p class="pr-contact">Jeddah, Saudi Arabia &nbsp;|&nbsp; +966 55 392 9565 &nbsp;|&nbsp; mohammedmuneer5577@gmail.com &nbsp;|&nbsp; linkedin.com/in/mohammed-al-khulaidi-696885393</p>
+  </div>
+
+  <div class="pr-section">
+    <h2>Summary</h2>
+    <p>Information Technology Engineer with hands-on experience in Oracle Database administration, PL/SQL development, and backend web development using Laravel. Experienced providing technical support for the enterprise-level Onyx iX ERP system and managing virtualized server environments on Oracle Linux and VMware ESXi. Comfortable with network administration and client-facing technical consultation.</p>
+  </div>
+
+  <div class="pr-section">
+    <h2>Skills</h2>
+    <p><strong>Databases:</strong> Oracle Database (SQL, PL/SQL), Oracle DBA, MySQL</p>
+    <p><strong>Web Development:</strong> Laravel, PHP, Next.js, React, JavaScript, HTML5, CSS3, Bootstrap</p>
+    <p><strong>Systems &amp; Virtualization:</strong> Oracle Linux, VMware ESXi, Network Administration</p>
+    <p><strong>ERP &amp; Productivity:</strong> Onyx iX ERP Support, Microsoft Office Suite, Adobe Photoshop, Adobe Illustrator</p>
+  </div>
+
+  <div class="pr-section">
+    <h2>Work Experience</h2>
+    <div class="pr-item">
+      <div class="pr-item-top"><strong>Technical Support Engineer</strong><span>12/2024 – Present</span></div>
+      <div class="pr-item-sub">Ultimate Solutions — Jeddah, Saudi Arabia</div>
+      <ul>
+        <li>Provide advanced technical support and troubleshooting for the enterprise-level Onyx iX ERP system.</li>
+        <li>Design, customize and optimize system reports to meet client business and financial requirements.</li>
+        <li>Assist clients with database deployment, migration and optimization for reliable operation.</li>
+        <li>Deliver professional consultation to end-users, ensuring smooth operations and high system availability.</li>
+        <li>Collaborate with technical teams to troubleshoot database queries and resolve application errors.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pr-section">
+    <h2>Projects</h2>
+    <div class="pr-item">
+      <div class="pr-item-top"><strong>Salon &amp; Hair Studio Management System</strong></div>
+      <div class="pr-item-sub">Next.js, React — admin, customer and supplier portals</div>
+    </div>
+    <div class="pr-item">
+      <div class="pr-item-top"><strong>University Management System</strong></div>
+      <div class="pr-item-sub">Next.js, React — staff and student portals</div>
+    </div>
+    <div class="pr-item">
+      <div class="pr-item-top"><strong>Wasl — Internal Issue &amp; Archive Tracker</strong></div>
+      <div class="pr-item-sub">PHP, MySQL — internal issue logging with electronic archiving</div>
+    </div>
+    <div class="pr-item">
+      <div class="pr-item-top"><strong>Task &amp; Document Archive App</strong></div>
+      <div class="pr-item-sub">Next.js, React, Expo — file/memo archiving with accounting entries</div>
+    </div>
+  </div>
+
+  <div class="pr-section">
+    <h2>Education</h2>
+    <div class="pr-item">
+      <div class="pr-item-top"><strong>Bachelor's Degree, Information Technology</strong><span>2023 – 2024</span></div>
+      <div class="pr-item-sub">University of Science and Technology — IT Department</div>
+    </div>
+    <div class="pr-item">
+      <div class="pr-item-top"><strong>Secondary School, Scientific Section</strong><span>2017 – 2018</span></div>
+      <div class="pr-item-sub">26 September School</div>
+    </div>
+  </div>
+
+  <div class="pr-section">
+    <h2>Certifications</h2>
+    <p>Cyber Security — University of Science and Technology (07/2023 – 08/2023)</p>
+    <p>International Computer Driving License (ICDL) — 2021 – 2022</p>
+    <p>Diploma of English — New Yemen Tech Institute (2017 – 2018)</p>
+    <p>Diploma of Accounting — 2023 – 2024</p>
+  </div>
+
+  <div class="pr-section">
+    <h2>Languages</h2>
+    <p>Arabic — Native &nbsp;|&nbsp; English — Professional Working Proficiency</p>
+  </div>
+</div>
 
 <script>
 /* ============================================================
