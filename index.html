@@ -30,7 +30,7 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <!-- Structured data -->
@@ -118,6 +118,31 @@ h1,h2,h3,h4{ font-family:'Inter',sans-serif; font-weight:800; letter-spacing:-0.
 
 .mono{ font-family:'IBM Plex Mono',monospace; }
 
+/* ============================================================
+   0b. ARABIC / RTL SUPPORT
+   ============================================================ */
+html[lang="ar"] body{ font-family:'IBM Plex Sans Arabic','Inter',sans-serif; }
+html[lang="ar"] h1, html[lang="ar"] h2, html[lang="ar"] h3, html[lang="ar"] h4{ font-family:'IBM Plex Sans Arabic','Inter',sans-serif; letter-spacing:0; }
+html[lang="ar"] .eyebrow, html[lang="ar"] .nav-links a, html[lang="ar"] .mobile-nav a, html[lang="ar"] .logo,
+html[lang="ar"] .tl-meta, html[lang="ar"] .pill, html[lang="ar"] .tag, html[lang="ar"] .skill-row-top span:last-child,
+html[lang="ar"] .stat-card .num, html[lang="ar"] .lang-top span, html[lang="ar"] .console *{
+  font-family:'IBM Plex Sans Arabic','Inter',sans-serif;
+}
+html[dir="rtl"] .eyebrow::before{ order:2; }
+html[dir="rtl"] .skip-link{ inset-inline-start:-999px; inset-inline-end:auto; border-radius:0 0 0 8px; }
+html[dir="rtl"] .skip-link:focus{ inset-inline-start:0; }
+html[dir="rtl"] .nav-links a::after{ inset-inline-start:0; }
+html[dir="rtl"] .timeline{ padding-left:0; padding-right:36px; }
+html[dir="rtl"] .timeline::before{ left:auto; right:6px; }
+html[dir="rtl"] .tl-item::before{ left:auto; right:-36px; }
+html[dir="rtl"] .tl-card:hover{ transform:translateX(-6px); }
+html[dir="rtl"] .badge-float{ left:auto; right:-30px; }
+html[dir="rtl"] .copy-btn{ margin-left:0; margin-right:auto; }
+html[dir="rtl"] #toTop{ right:auto; left:26px; }
+html[dir="rtl"] .tl-list li{ padding-left:0; padding-right:18px; }
+html[dir="rtl"] .tl-list li::before{ left:auto; right:0; }
+@media (max-width:640px){ html[dir="rtl"] .badge-float{ right:0; } }
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
 }
@@ -137,6 +162,7 @@ section{ padding:120px 0; position:relative; }
   margin-bottom:14px;
 }
 .eyebrow::before{ content:''; width:26px; height:1px; background:var(--accent); display:inline-block; }
+.hero-copy .eyebrow.mono{ direction:ltr; text-align:left; justify-content:flex-start; }
 .section-head{ max-width:640px; margin-bottom:64px; }
 .section-head h2{ font-size:clamp(1.9rem,3.2vw,2.6rem); margin-bottom:14px; }
 .section-head p{ color:var(--text-dim); font-size:1.05rem; }
@@ -189,6 +215,7 @@ header.nav{
   border:1px solid var(--border); color:var(--text); transition:.25s var(--ease);
 }
 .icon-btn:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+.lang-btn{ width:auto; padding:0 12px; font-size:.72rem; font-weight:700; letter-spacing:.03em; }
 .burger{ display:none; }
 
 /* ============================================================
@@ -226,6 +253,7 @@ header.nav{
   background:var(--card); border:1px solid var(--border); border-radius:var(--radius-md);
   font-family:'IBM Plex Mono',monospace; font-size:.86rem; box-shadow:var(--shadow);
   margin-bottom:34px; max-width:560px; overflow:hidden;
+  direction:ltr; text-align:left;
 }
 .console-bar{ display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid var(--border); }
 .console-bar span{ width:10px; height:10px; border-radius:50%; background:var(--border); }
@@ -451,18 +479,25 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
    no multi-column layout).
    ============================================================ */
 #printResume{ display:none; }
+#printResume .pr-en, #printResume .pr-ar{ display:none; }
 
 @media print{
   @page{ size:A4; margin:14mm 16mm; }
   html,body{ background:#fff !important; }
   #siteWrap{ display:none !important; }
+  #printResume{ display:block !important; }
+  html[lang="en"] #printResume .pr-en{ display:block !important; }
+  html[lang="ar"] #printResume .pr-ar{ display:block !important; }
+
   #printResume{
-    display:block !important;
     color:#111827;
     font-family:'Inter',Arial,Helvetica,sans-serif;
     font-size:10.6pt;
     line-height:1.5;
   }
+  #printResume .pr-ar{ font-family:'IBM Plex Sans Arabic',Arial,sans-serif; text-align:right; }
+  #printResume .pr-ar .pr-item-top, #printResume .pr-ar .pr-contact{ direction:rtl; }
+  #printResume .pr-ar ul{ padding-left:0; padding-right:14pt; }
   #printResume h1{ font-size:19pt; font-weight:800; letter-spacing:0; color:#0F172A; margin-bottom:4pt; }
   #printResume .pr-title{ font-size:11pt; font-weight:600; color:#1E293B; margin-bottom:5pt; }
   #printResume .pr-contact{ font-size:9.5pt; color:#334155; margin-bottom:12pt; }
@@ -472,12 +507,14 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
     font-size:11.5pt; font-weight:800; text-transform:uppercase; letter-spacing:.06em;
     color:#0F172A; border-bottom:.75pt solid #94A3B8; padding-bottom:3pt; margin-bottom:8pt;
   }
+  #printResume .pr-ar h2{ text-transform:none; letter-spacing:0; }
   #printResume p{ margin-bottom:5pt; }
   #printResume .pr-item{ margin-bottom:9pt; page-break-inside:avoid; }
   #printResume .pr-item-top{ display:flex; justify-content:space-between; font-size:10.6pt; }
   #printResume .pr-item-top strong{ font-weight:700; }
   #printResume .pr-item-top span{ font-weight:500; color:#334155; }
   #printResume .pr-item-sub{ font-style:italic; color:#334155; margin-bottom:4pt; }
+  #printResume .pr-ar .pr-item-sub{ font-style:normal; }
   #printResume ul{ padding-left:14pt; list-style:disc; }
   #printResume li{ margin-bottom:3pt; }
   #printResume strong{ font-weight:700; }
@@ -505,30 +542,31 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
   <div class="nav-inner">
     <a href="#top" class="logo mono"><span class="dot"></span>MOHAMMED_MUNEER</a>
     <nav class="nav-links" id="navLinks" aria-label="Primary">
-      <a href="#profile" data-nav>PROFILE</a>
-      <a href="#stack" data-nav>STACK</a>
-      <a href="#work" data-nav>WORK</a>
-      <a href="#build" data-nav>BUILD</a>
-      <a href="#edu" data-nav>EDU</a>
-      <a href="#contact" data-nav>CONTACT</a>
+      <a href="#profile" data-nav data-i18n="nav_profile">PROFILE</a>
+      <a href="#stack" data-nav data-i18n="nav_stack">STACK</a>
+      <a href="#work" data-nav data-i18n="nav_work">WORK</a>
+      <a href="#build" data-nav data-i18n="nav_build">BUILD</a>
+      <a href="#edu" data-nav data-i18n="nav_edu">EDU</a>
+      <a href="#contact" data-nav data-i18n="nav_contact">CONTACT</a>
     </nav>
     <div class="nav-actions">
-      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark and light theme">
+      <button class="icon-btn lang-btn mono" id="langToggle" aria-label="Switch language to Arabic" title="EN / AR">AR</button>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle dark and light theme" data-i18n-aria="aria_theme">
         <i class="fa-solid fa-moon" id="themeIcon" aria-hidden="true"></i>
       </button>
-      <button class="icon-btn burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+      <button class="icon-btn burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false" data-i18n-aria="aria_burger">
         <i class="fa-solid fa-bars" aria-hidden="true"></i>
       </button>
     </div>
   </div>
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
-    <a href="#profile">PROFILE</a>
-    <a href="#stack">STACK</a>
-    <a href="#work">WORK</a>
-    <a href="#build">BUILD</a>
-    <a href="#edu">EDU</a>
-    <a href="#certs">CERTS</a>
-    <a href="#contact">CONTACT</a>
+    <a href="#profile" data-i18n="nav_profile">PROFILE</a>
+    <a href="#stack" data-i18n="nav_stack">STACK</a>
+    <a href="#work" data-i18n="nav_work">WORK</a>
+    <a href="#build" data-i18n="nav_build">BUILD</a>
+    <a href="#edu" data-i18n="nav_edu">EDU</a>
+    <a href="#certs" data-i18n="nav_certs">CERTS</a>
+    <a href="#contact" data-i18n="nav_contact">CONTACT</a>
   </nav>
 </header>
 
@@ -541,8 +579,8 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <p class="eyebrow mono">SELECT * FROM engineers WHERE city = 'Jeddah';</p>
-      <h1>Backend &amp; Database <span>Engineer</span>,<br>built on Oracle &amp; Laravel.</h1>
-      <p class="lede">I'm Mohammed Muneer, an IT engineer in Jeddah, Saudi Arabia. I keep enterprise ERP systems running, write PL/SQL that holds up under load, and ship Laravel backends that don't fall over.</p>
+      <h1 data-i18n-html="hero_h1">Backend &amp; Database <span>Engineer</span>,<br>built on Oracle &amp; Laravel.</h1>
+      <p class="lede" data-i18n="hero_lede">I'm Mohammed Muneer, an IT engineer in Jeddah, Saudi Arabia. I keep enterprise ERP systems running, write PL/SQL that holds up under load, and ship Laravel backends that don't fall over.</p>
 
       <div class="console" aria-hidden="true">
         <div class="console-bar">
@@ -556,15 +594,15 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       </div>
 
       <div class="hero-btns">
-        <button class="btn btn-primary" id="downloadBtn"><i class="fa-solid fa-download"></i>Download Resume</button>
-        <a href="#contact" class="btn btn-ghost"><i class="fa-regular fa-paper-plane"></i>Contact Me</a>
+        <button class="btn btn-primary" id="downloadBtn"><i class="fa-solid fa-download"></i><span data-i18n="btn_download">Download Resume</span></button>
+        <a href="#contact" class="btn btn-ghost"><i class="fa-regular fa-paper-plane"></i><span data-i18n="btn_contact">Contact Me</span></a>
       </div>
 
       <div class="hero-stats">
-        <div><strong data-count="1">0</strong><span>YEAR IN ENTERPRISE ERP</span></div>
-        <div><strong data-count="2">0</strong><span>CORE STACKS · ORACLE / LARAVEL</span></div>
-        <div><strong data-count="4">0</strong><span>PROFESSIONAL CERTIFICATIONS</span></div>
-        <div><strong data-count="2">0</strong><span>LANGUAGES SPOKEN</span></div>
+        <div><strong data-count="1">0</strong><span data-i18n="stat_lbl_year">YEAR IN ENTERPRISE ERP</span></div>
+        <div><strong data-count="3">0</strong><span data-i18n="stat_lbl_stacks">CORE STACKS · ORACLE / LARAVEL / NEXT.JS</span></div>
+        <div><strong data-count="4">0</strong><span data-i18n="stat_lbl_certs">PROFESSIONAL CERTIFICATIONS</span></div>
+        <div><strong data-count="2">0</strong><span data-i18n="stat_lbl_langs">LANGUAGES SPOKEN</span></div>
       </div>
     </div>
 
@@ -578,7 +616,7 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       </div>
       <div class="badge-float">
         <i class="fa-solid fa-circle-check"></i>
-        <div><strong>Available for hire</strong><span>Onsite &amp; remote · KSA</span></div>
+        <div><strong data-i18n="badge_available">Available for hire</strong><span data-i18n="badge_location">Onsite &amp; remote · KSA</span></div>
       </div>
     </div>
   </div>
@@ -590,17 +628,17 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="profile" class="section-alt">
   <div class="wrap about-grid">
     <div class="about-text reveal">
-      <p class="eyebrow">PROFILE</p>
-      <h2 style="font-size:clamp(1.9rem,3vw,2.4rem); margin-bottom:22px;">Enterprise systems, kept dependable.</h2>
-      <p>I'm a results-driven <strong>Information Technology Engineer</strong> with hands-on expertise in <strong>Oracle Database administration</strong>, <strong>PL/SQL development</strong>, and backend architecture built with <strong>Laravel</strong>.</p>
-      <p>My day-to-day is enterprise ERP: I support, customize and troubleshoot the <strong>Onyx iX</strong> platform for clients, manage virtualized environments on <strong>Oracle Linux</strong> and <strong>VMware ESXi</strong>, and handle the network administration that keeps it all connected.</p>
-      <p>I care about getting the database layer right first — the rest of the system is only as reliable as the queries underneath it.</p>
+      <p class="eyebrow" data-i18n="nav_profile">PROFILE</p>
+      <h2 style="font-size:clamp(1.9rem,3vw,2.4rem); margin-bottom:22px;" data-i18n="about_h2">Enterprise systems, kept dependable.</h2>
+      <p data-i18n-html="about_p1">I'm a results-driven <strong>Information Technology Engineer</strong> with hands-on expertise in <strong>Oracle Database administration</strong>, <strong>PL/SQL development</strong>, and backend architecture built with <strong>Laravel</strong> and <strong>Next.js</strong>.</p>
+      <p data-i18n-html="about_p2">My day-to-day is enterprise ERP: I support, customize and troubleshoot the <strong>Onyx iX</strong> platform for clients, manage virtualized environments on <strong>Oracle Linux</strong> and <strong>VMware ESXi</strong>, and handle the network administration that keeps it all connected.</p>
+      <p data-i18n="about_p3">I care about getting the database layer right first — the rest of the system is only as reliable as the queries underneath it.</p>
     </div>
     <div class="stat-grid reveal reveal-stagger">
-      <div class="stat-card" style="--i:0"><div class="num" data-count="1">0</div><div class="lbl">Year of professional ERP support experience</div></div>
-      <div class="stat-card" style="--i:1"><div class="num" data-count="1">0</div><div class="lbl">Enterprise ERP platform supported (Onyx iX)</div></div>
-      <div class="stat-card" style="--i:2"><div class="num" data-count="5">0</div><div class="lbl">Core technical domains — DB, backend, systems, network, design</div></div>
-      <div class="stat-card" style="--i:3"><div class="num" data-count="4">0</div><div class="lbl">Completed diplomas &amp; technical certifications</div></div>
+      <div class="stat-card" style="--i:0"><div class="num" data-count="1">0</div><div class="lbl" data-i18n="stat_card1">Year of professional ERP support experience</div></div>
+      <div class="stat-card" style="--i:1"><div class="num" data-count="1">0</div><div class="lbl" data-i18n="stat_card2">Enterprise ERP platform supported (Onyx iX)</div></div>
+      <div class="stat-card" style="--i:2"><div class="num" data-count="6">0</div><div class="lbl" data-i18n="stat_card3">Core technical domains — DB, backend, systems, network, design</div></div>
+      <div class="stat-card" style="--i:3"><div class="num" data-count="4">0</div><div class="lbl" data-i18n="stat_card4">Completed diplomas &amp; technical certifications</div></div>
     </div>
   </div>
 </section>
@@ -611,32 +649,33 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="stack">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">STACK</p>
-      <h2>Technical skills</h2>
-      <p>The tools I use daily to keep enterprise data and backend systems running.</p>
+      <p class="eyebrow" data-i18n="nav_stack">STACK</p>
+      <h2 data-i18n="stack_h2">Technical skills</h2>
+      <p data-i18n="stack_p">The tools I use daily to keep enterprise data and backend systems running.</p>
     </div>
     <div class="skill-groups reveal reveal-stagger">
       <div class="skill-card" style="--i:0">
-        <h3><i class="fa-solid fa-database"></i>Databases</h3>
+        <h3><i class="fa-solid fa-database"></i><span data-i18n="skillDbTitle">Databases</span></h3>
         <div class="skill-row"><div class="skill-row-top"><span>Oracle Database (SQL &amp; PL/SQL)</span><span>90%</span></div><div class="bar"><div class="bar-fill" data-fill="90"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>Oracle DBA</span><span>80%</span></div><div class="bar"><div class="bar-fill" data-fill="80"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>MySQL</span><span>75%</span></div><div class="bar"><div class="bar-fill" data-fill="75"></div></div></div>
       </div>
       <div class="skill-card" style="--i:1">
-        <h3><i class="fa-solid fa-code"></i>Web Development</h3>
+        <h3><i class="fa-solid fa-code"></i><span data-i18n="skillWebTitle">Web Development</span></h3>
+        <div class="skill-row"><div class="skill-row-top"><span>Next.js</span><span>78%</span></div><div class="bar"><div class="bar-fill" data-fill="78"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>Laravel (PHP backend)</span><span>82%</span></div><div class="bar"><div class="bar-fill" data-fill="82"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>HTML5 / CSS3</span><span>85%</span></div><div class="bar"><div class="bar-fill" data-fill="85"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>JavaScript</span><span>70%</span></div><div class="bar"><div class="bar-fill" data-fill="70"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>Bootstrap</span><span>75%</span></div><div class="bar"><div class="bar-fill" data-fill="75"></div></div></div>
       </div>
       <div class="skill-card" style="--i:2">
-        <h3><i class="fa-solid fa-server"></i>Systems &amp; Virtualization</h3>
+        <h3><i class="fa-solid fa-server"></i><span data-i18n="skillSysTitle">Systems &amp; Virtualization</span></h3>
         <div class="skill-row"><div class="skill-row-top"><span>Oracle Linux</span><span>75%</span></div><div class="bar"><div class="bar-fill" data-fill="75"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>VMware ESXi</span><span>70%</span></div><div class="bar"><div class="bar-fill" data-fill="70"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>Network Administration</span><span>70%</span></div><div class="bar"><div class="bar-fill" data-fill="70"></div></div></div>
       </div>
       <div class="skill-card" style="--i:3">
-        <h3><i class="fa-solid fa-headset"></i>ERP &amp; Productivity</h3>
+        <h3><i class="fa-solid fa-headset"></i><span data-i18n="skillErpTitle">ERP &amp; Productivity</span></h3>
         <div class="skill-row"><div class="skill-row-top"><span>Onyx iX ERP Support</span><span>85%</span></div><div class="bar"><div class="bar-fill" data-fill="85"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>Microsoft Office Suite</span><span>90%</span></div><div class="bar"><div class="bar-fill" data-fill="90"></div></div></div>
         <div class="skill-row"><div class="skill-row-top"><span>Adobe Photoshop / Illustrator</span><span>62%</span></div><div class="bar"><div class="bar-fill" data-fill="62"></div></div></div>
@@ -651,31 +690,31 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="work" class="section-alt">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">WORK</p>
-      <h2>Experience</h2>
-      <p>Currently supporting enterprise ERP clients at Ultimate Solutions.</p>
+      <p class="eyebrow" data-i18n="nav_work">WORK</p>
+      <h2 data-i18n="work_h2">Experience</h2>
+      <p data-i18n="work_p">Currently supporting enterprise ERP clients at Ultimate Solutions.</p>
     </div>
     <div class="timeline reveal">
       <div class="tl-item now">
         <div class="tl-card">
           <div class="tl-top">
-            <span class="tl-role">Technical Support Engineer — Ultimate Solutions</span>
-            <span class="tl-meta">12/2024 — PRESENT</span>
+            <span class="tl-role" data-i18n="work_role">Technical Support Engineer — Ultimate Solutions</span>
+            <span class="tl-meta" data-i18n="work_meta">12/2024 — PRESENT</span>
           </div>
           <ul class="tl-list">
-            <li>Provide advanced technical support and troubleshooting for the enterprise-level Onyx iX ERP system.</li>
-            <li>Design, customize and optimize system reports to meet client business and financial requirements.</li>
-            <li>Assist clients with database deployment, migration and optimization for reliable operation.</li>
-            <li>Deliver professional consultation to end-users, ensuring smooth operations and high system availability.</li>
-            <li>Collaborate with technical teams to troubleshoot database queries and resolve application errors.</li>
+            <li data-i18n="work_li1">Provide advanced technical support and troubleshooting for the enterprise-level Onyx iX ERP system.</li>
+            <li data-i18n="work_li2">Design, customize and optimize system reports to meet client business and financial requirements.</li>
+            <li data-i18n="work_li3">Assist clients with database deployment, migration and optimization for reliable operation.</li>
+            <li data-i18n="work_li4">Deliver professional consultation to end-users, ensuring smooth operations and high system availability.</li>
+            <li data-i18n="work_li5">Collaborate with technical teams to troubleshoot database queries and resolve application errors.</li>
           </ul>
-          <span class="pill">Jeddah, Saudi Arabia</span>
+          <span class="pill" data-i18n="work_pill">Jeddah, Saudi Arabia</span>
         </div>
       </div>
       <div class="tl-item">
         <div class="tl-card">
-          <div class="tl-top"><span class="tl-role">Open to the next challenge</span><span class="tl-meta">WHAT'S NEXT</span></div>
-          <p style="color:var(--text-dim); font-size:.94rem;">Looking to grow into a broader backend or database engineering role where I can go deeper on Oracle performance tuning and Laravel API architecture.</p>
+          <div class="tl-top"><span class="tl-role" data-i18n="work_next_role">Open to the next challenge</span><span class="tl-meta" data-i18n="work_next_meta">WHAT'S NEXT</span></div>
+          <p style="color:var(--text-dim); font-size:.94rem;" data-i18n="work_next_p">Looking to grow into a broader backend or database engineering role where I can go deeper on Oracle performance tuning and Laravel API architecture.</p>
         </div>
       </div>
     </div>
@@ -688,22 +727,22 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="build">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">BUILD</p>
-      <h2>Selected builds</h2>
-      <p>Live systems I designed and built end-to-end, each with multiple role-based portals — deployed and in real use.</p>
+      <p class="eyebrow" data-i18n="nav_build">BUILD</p>
+      <h2 data-i18n="build_h2">Selected builds</h2>
+      <p data-i18n="build_p">Live systems I designed and built end-to-end, each with multiple role-based portals — deployed and in real use.</p>
     </div>
     <div class="proj-grid reveal reveal-stagger">
 
       <div class="proj-card" style="--i:0">
         <div class="proj-thumb"><i class="fa-solid fa-scissors"></i></div>
         <div class="proj-body">
-          <h3>Salon &amp; Hair Studio Management System</h3>
-          <p>Full booking, staff and inventory management platform for salons, with dedicated apps for admins, customers and suppliers.</p>
+          <h3 data-i18n="proj1_title">Salon &amp; Hair Studio Management System</h3>
+          <p data-i18n="proj1_desc">Full booking, staff and inventory management platform for salons, with dedicated apps for admins, customers and suppliers.</p>
           <div class="tag-row"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Multi-portal</span></div>
           <div class="tag-row" style="margin-top:2px;">
-            <a href="https://salon-admin-tau-rose.vercel.app/public" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Admin</a>
-            <a href="https://salon-customer-three.vercel.app/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Customer App</a>
-            <a href="https://salon-admin-tau-rose.vercel.app/supplier-portal/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Supplier Portal</a>
+            <a href="https://salon-admin-tau-rose.vercel.app/public" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;<span data-i18n="link_admin">Admin</span></a>
+            <a href="https://salon-customer-three.vercel.app/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;<span data-i18n="link_customer">Customer App</span></a>
+            <a href="https://salon-admin-tau-rose.vercel.app/supplier-portal/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;<span data-i18n="link_supplier">Supplier Portal</span></a>
           </div>
         </div>
       </div>
@@ -711,12 +750,12 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       <div class="proj-card" style="--i:1">
         <div class="proj-thumb"><i class="fa-solid fa-graduation-cap"></i></div>
         <div class="proj-body">
-          <h3>University Management System</h3>
-          <p>A university-wide system for managing academic operations, with separate portals built for teaching staff and students.</p>
+          <h3 data-i18n="proj2_title">University Management System</h3>
+          <p data-i18n="proj2_desc">A university-wide system for managing academic operations, with separate portals built for teaching staff and students.</p>
           <div class="tag-row"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Multi-portal</span></div>
           <div class="tag-row" style="margin-top:2px;">
-            <a href="https://ust-next.vercel.app/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Staff Login</a>
-            <a href="https://ust-next.vercel.app/student/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Student Login</a>
+            <a href="https://ust-next.vercel.app/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;<span data-i18n="link_staff">Staff Login</span></a>
+            <a href="https://ust-next.vercel.app/student/login" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;<span data-i18n="link_student">Student Login</span></a>
           </div>
         </div>
       </div>
@@ -724,11 +763,11 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       <div class="proj-card" style="--i:2">
         <div class="proj-thumb"><i class="fa-solid fa-folder-tree"></i></div>
         <div class="proj-body">
-          <h3>Wasl — Internal Issue &amp; Archive Tracker</h3>
-          <p>An internal system for logging and tracking company issues end-to-end, with full electronic document archiving.</p>
+          <h3 data-i18n="proj3_title">Wasl — Internal Issue &amp; Archive Tracker</h3>
+          <p data-i18n="proj3_desc">An internal system for logging and tracking company issues end-to-end, with full electronic document archiving.</p>
           <div class="tag-row"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">E-Archiving</span></div>
           <div class="tag-row" style="margin-top:2px;">
-            <a href="https://wasl.wuaze.com/?i=1" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Live Demo</a>
+            <a href="https://wasl.wuaze.com/?i=1" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;<span data-i18n="link_livedemo">Live Demo</span></a>
           </div>
         </div>
       </div>
@@ -736,11 +775,11 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       <div class="proj-card" style="--i:3">
         <div class="proj-thumb"><i class="fa-solid fa-mobile-screen-button"></i></div>
         <div class="proj-body">
-          <h3>Task &amp; Document Archive App</h3>
-          <p>A mobile and web app for archiving files, memos and appointments, with built-in accounting entries to help organize daily tasks.</p>
+          <h3 data-i18n="proj4_title">Task &amp; Document Archive App</h3>
+          <p data-i18n="proj4_desc">A mobile and web app for archiving files, memos and appointments, with built-in accounting entries to help organize daily tasks.</p>
           <div class="tag-row"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Expo</span><span class="tag">Mobile</span></div>
           <div class="tag-row" style="margin-top:2px;">
-            <a href="https://www.mediafire.com/file/j8vq546swbsbut4/application-7d08fe6f-d625-414e-9022-a80d6e0d9889.apk/file" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;Download APK</a>
+            <a href="https://www.mediafire.com/file/j8vq546swbsbut4/application-7d08fe6f-d625-414e-9022-a80d6e0d9889.apk/file" target="_blank" rel="noopener" class="tag" style="color:var(--wire); border-color:var(--wire);"><i class="fa-solid fa-arrow-up-right-from-square"></i>&nbsp;<span data-i18n="link_apk">Download APK</span></a>
           </div>
         </div>
       </div>
@@ -755,20 +794,20 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="edu" class="section-alt">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">EDU</p>
-      <h2>Education</h2>
+      <p class="eyebrow" data-i18n="nav_edu">EDU</p>
+      <h2 data-i18n="edu_h2">Education</h2>
     </div>
     <div class="timeline reveal">
       <div class="tl-item">
         <div class="tl-card">
-          <div class="tl-top"><span class="tl-role">Bachelor's Degree, Information Technology</span><span class="tl-meta">2023 — 2024</span></div>
-          <p style="color:var(--text-dim); font-size:.94rem;">University of Science and Technology — IT Department.</p>
+          <div class="tl-top"><span class="tl-role" data-i18n="edu1_role">Bachelor's Degree, Information Technology</span><span class="tl-meta">2023 — 2024</span></div>
+          <p style="color:var(--text-dim); font-size:.94rem;" data-i18n="edu1_sub">University of Science and Technology — IT Department.</p>
         </div>
       </div>
       <div class="tl-item">
         <div class="tl-card">
-          <div class="tl-top"><span class="tl-role">Secondary School — Scientific Section</span><span class="tl-meta">2017 — 2018</span></div>
-          <p style="color:var(--text-dim); font-size:.94rem;">26 September School.</p>
+          <div class="tl-top"><span class="tl-role" data-i18n="edu2_role">Secondary School — Scientific Section</span><span class="tl-meta">2017 — 2018</span></div>
+          <p style="color:var(--text-dim); font-size:.94rem;" data-i18n="edu2_sub">26 September School.</p>
         </div>
       </div>
     </div>
@@ -781,14 +820,14 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="certs">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">CERTS</p>
-      <h2>Certifications &amp; courses</h2>
+      <p class="eyebrow" data-i18n="nav_certs">CERTS</p>
+      <h2 data-i18n="certs_h2">Certifications &amp; courses</h2>
     </div>
     <div class="cert-grid reveal reveal-stagger">
-      <div class="cert-card" style="--i:0"><i class="fa-solid fa-shield-halved"></i><h3>Cyber Security</h3><span>University of Science and Technology · 07/2023 – 08/2023</span></div>
-      <div class="cert-card" style="--i:1"><i class="fa-solid fa-laptop-code"></i><h3>ICDL</h3><span>International Computer Driving License · 2021 – 2022</span></div>
-      <div class="cert-card" style="--i:2"><i class="fa-solid fa-language"></i><h3>Diploma of English</h3><span>New Yemen Tech Institute · 2017 – 2018</span></div>
-      <div class="cert-card" style="--i:3"><i class="fa-solid fa-file-invoice-dollar"></i><h3>Diploma of Accounting</h3><span>2023 – 2024</span></div>
+      <div class="cert-card" style="--i:0"><i class="fa-solid fa-shield-halved"></i><h3 data-i18n="cert1_title">Cyber Security</h3><span data-i18n="cert1_sub">University of Science and Technology · 07/2023 – 08/2023</span></div>
+      <div class="cert-card" style="--i:1"><i class="fa-solid fa-laptop-code"></i><h3>ICDL</h3><span data-i18n="cert2_sub">International Computer Driving License · 2021 – 2022</span></div>
+      <div class="cert-card" style="--i:2"><i class="fa-solid fa-language"></i><h3 data-i18n="cert3_title">Diploma of English</h3><span data-i18n="cert3_sub">New Yemen Tech Institute · 2017 – 2018</span></div>
+      <div class="cert-card" style="--i:3"><i class="fa-solid fa-file-invoice-dollar"></i><h3 data-i18n="cert4_title">Diploma of Accounting</h3><span>2023 – 2024</span></div>
     </div>
   </div>
 </section>
@@ -799,14 +838,14 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="focus" class="section-alt">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">FOCUS</p>
-      <h2>Where I add the most value</h2>
+      <p class="eyebrow" data-i18n="focus_eyebrow">FOCUS</p>
+      <h2 data-i18n="focus_h2">Where I add the most value</h2>
     </div>
     <div class="ach-grid reveal reveal-stagger">
-      <div class="ach-card" style="--i:0"><i class="fa-solid fa-building"></i><h3>Enterprise ERP</h3><p>Hands-on Onyx iX support &amp; customization.</p></div>
-      <div class="ach-card" style="--i:1"><i class="fa-solid fa-database"></i><h3>Oracle Database</h3><p>SQL, PL/SQL and day-to-day DBA tasks.</p></div>
-      <div class="ach-card" style="--i:2"><i class="fa-solid fa-diagram-project"></i><h3>Backend Architecture</h3><p>Laravel-based backends built to last.</p></div>
-      <div class="ach-card" style="--i:3"><i class="fa-solid fa-network-wired"></i><h3>Systems &amp; Network</h3><p>Oracle Linux, VMware ESXi, networking.</p></div>
+      <div class="ach-card" style="--i:0"><i class="fa-solid fa-building"></i><h3 data-i18n="ach1_title">Enterprise ERP</h3><p data-i18n="ach1_p">Hands-on Onyx iX support &amp; customization.</p></div>
+      <div class="ach-card" style="--i:1"><i class="fa-solid fa-database"></i><h3 data-i18n="ach2_title">Oracle Database</h3><p data-i18n="ach2_p">SQL, PL/SQL and day-to-day DBA tasks.</p></div>
+      <div class="ach-card" style="--i:2"><i class="fa-solid fa-diagram-project"></i><h3 data-i18n="ach3_title">Backend Architecture</h3><p data-i18n="ach3_p">Laravel &amp; Next.js backends built to last.</p></div>
+      <div class="ach-card" style="--i:3"><i class="fa-solid fa-network-wired"></i><h3 data-i18n="ach4_title">Systems &amp; Network</h3><p data-i18n="ach4_p">Oracle Linux, VMware ESXi, networking.</p></div>
     </div>
   </div>
 </section>
@@ -817,16 +856,16 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="languages">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">LANGUAGES</p>
-      <h2>Languages</h2>
+      <p class="eyebrow" data-i18n="languages_eyebrow">LANGUAGES</p>
+      <h2 data-i18n="languages_h2">Languages</h2>
     </div>
     <div class="lang-grid reveal reveal-stagger">
       <div class="lang-card" style="--i:0">
-        <div class="lang-top"><strong>Arabic</strong><span>Native</span></div>
+        <div class="lang-top"><strong data-i18n="lang_arabic">Arabic</strong><span data-i18n="lang_arabic_level">Native</span></div>
         <div class="bar"><div class="bar-fill" data-fill="100"></div></div>
       </div>
       <div class="lang-card" style="--i:1">
-        <div class="lang-top"><strong>English</strong><span>Professional</span></div>
+        <div class="lang-top"><strong data-i18n="lang_english">English</strong><span data-i18n="lang_english_level">Professional</span></div>
         <div class="bar"><div class="bar-fill" data-fill="78"></div></div>
       </div>
     </div>
@@ -839,16 +878,16 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="why" class="section-alt">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">WHY ME</p>
-      <h2>Why hire me</h2>
+      <p class="eyebrow" data-i18n="why_eyebrow">WHY ME</p>
+      <h2 data-i18n="why_h2">Why hire me</h2>
     </div>
     <div class="why-grid reveal reveal-stagger">
-      <div class="why-card" style="--i:0"><i class="fa-solid fa-puzzle-piece"></i><h3>Problem-solving</h3><p>I trace issues to the query, config or process actually causing them.</p></div>
-      <div class="why-card" style="--i:1"><i class="fa-solid fa-comments"></i><h3>Communication</h3><p>I translate technical detail into something a client or teammate can act on.</p></div>
-      <div class="why-card" style="--i:2"><i class="fa-solid fa-chart-line"></i><h3>Analytical thinking</h3><p>Comfortable reading through data, reports and logs to find the root cause.</p></div>
-      <div class="why-card" style="--i:3"><i class="fa-solid fa-bolt"></i><h3>Fast learner</h3><p>Adaptable to new tools, systems and client requirements without hand-holding.</p></div>
-      <div class="why-card" style="--i:4"><i class="fa-solid fa-building-shield"></i><h3>Enterprise experience</h3><p>Already comfortable in production ERP environments with real client stakes.</p></div>
-      <div class="why-card" style="--i:5"><i class="fa-solid fa-list-check"></i><h3>Reliable &amp; organized</h3><p>Plans work, manages time, and delivers what was committed to.</p></div>
+      <div class="why-card" style="--i:0"><i class="fa-solid fa-puzzle-piece"></i><h3 data-i18n="why1_title">Problem-solving</h3><p data-i18n="why1_p">I trace issues to the query, config or process actually causing them.</p></div>
+      <div class="why-card" style="--i:1"><i class="fa-solid fa-comments"></i><h3 data-i18n="why2_title">Communication</h3><p data-i18n="why2_p">I translate technical detail into something a client or teammate can act on.</p></div>
+      <div class="why-card" style="--i:2"><i class="fa-solid fa-chart-line"></i><h3 data-i18n="why3_title">Analytical thinking</h3><p data-i18n="why3_p">Comfortable reading through data, reports and logs to find the root cause.</p></div>
+      <div class="why-card" style="--i:3"><i class="fa-solid fa-bolt"></i><h3 data-i18n="why4_title">Fast learner</h3><p data-i18n="why4_p">Adaptable to new tools, systems and client requirements without hand-holding.</p></div>
+      <div class="why-card" style="--i:4"><i class="fa-solid fa-building-shield"></i><h3 data-i18n="why5_title">Enterprise experience</h3><p data-i18n="why5_p">Already comfortable in production ERP environments with real client stakes.</p></div>
+      <div class="why-card" style="--i:5"><i class="fa-solid fa-list-check"></i><h3 data-i18n="why6_title">Reliable &amp; organized</h3><p data-i18n="why6_p">Plans work, manages time, and delivers what was committed to.</p></div>
     </div>
   </div>
 </section>
@@ -859,30 +898,30 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 <section id="contact">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">CONTACT</p>
-      <h2>Get in touch</h2>
-      <p>Open to full-time roles and freelance work involving Oracle, Laravel or ERP support.</p>
+      <p class="eyebrow" data-i18n="nav_contact">CONTACT</p>
+      <h2 data-i18n="contact_h2">Get in touch</h2>
+      <p data-i18n="contact_p">Open to full-time roles and freelance work involving Oracle, Laravel or ERP support.</p>
     </div>
     <div class="contact-grid2 reveal reveal-stagger">
       <div class="contact-card" style="--i:0">
         <i class="fa-solid fa-phone" aria-hidden="true"></i>
-        <div><strong>Phone</strong><a href="tel:+00966553929565">+966 55 392 9565</a></div>
-        <button class="copy-btn" data-copy="+966553929565" aria-label="Copy phone number"><i class="fa-regular fa-copy"></i></button>
+        <div><strong data-i18n="label_phone">Phone</strong><a href="tel:+00966553929565">+966 55 392 9565</a></div>
+        <button class="copy-btn" data-copy="+966553929565" aria-label="Copy phone number" data-i18n-aria="aria_copy_phone"><i class="fa-regular fa-copy"></i></button>
       </div>
       <div class="contact-card" style="--i:1">
         <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-        <div><strong>Email</strong><a href="mailto:mohammedmuneer5577@gmail.com">mohammedmuneer5577@gmail.com</a></div>
-        <button class="copy-btn" data-copy="mohammedmuneer5577@gmail.com" aria-label="Copy email address"><i class="fa-regular fa-copy"></i></button>
+        <div><strong data-i18n="label_email">Email</strong><a href="mailto:mohammedmuneer5577@gmail.com">mohammedmuneer5577@gmail.com</a></div>
+        <button class="copy-btn" data-copy="mohammedmuneer5577@gmail.com" aria-label="Copy email address" data-i18n-aria="aria_copy_email"><i class="fa-regular fa-copy"></i></button>
       </div>
       <div class="contact-card" style="--i:2">
         <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
-        <div><strong>LinkedIn</strong><a href="https://www.linkedin.com/in/mohammed-al-khulaidi-696885393" target="_blank" rel="noopener">/mohammed-al-khulaidi</a></div>
+        <div><strong data-i18n="label_linkedin">LinkedIn</strong><a href="https://www.linkedin.com/in/mohammed-al-khulaidi-696885393" target="_blank" rel="noopener">/mohammed-al-khulaidi</a></div>
       </div>
     </div>
     <div class="contact-cta reveal">
-      <h2>Let's build something reliable.</h2>
-      <p>Jeddah, Saudi Arabia · available for onsite and remote work</p>
-      <a href="mailto:mohammedmuneer5577@gmail.com" class="btn btn-primary"><i class="fa-solid fa-envelope"></i>Email Me</a>
+      <h2 data-i18n="contact_cta_h2">Let's build something reliable.</h2>
+      <p data-i18n="contact_cta_p">Jeddah, Saudi Arabia · available for onsite and remote work</p>
+      <a href="mailto:mohammedmuneer5577@gmail.com" class="btn btn-primary"><i class="fa-solid fa-envelope"></i><span data-i18n="btn_email">Email Me</span></a>
     </div>
   </div>
 </section>
@@ -891,102 +930,188 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 
 <footer>
   <div class="wrap footer-inner">
-    <p>Designed &amp; built by Mohammed Muneer · &copy; <span id="year"></span></p>
+    <p><span data-i18n="footer_credit">Designed &amp; built by Mohammed Muneer ·</span> &copy; <span id="year"></span></p>
     <div class="footer-social">
-      <a href="mailto:mohammedmuneer5577@gmail.com" class="icon-btn" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/mohammed-al-khulaidi-696885393" target="_blank" rel="noopener" class="icon-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-      <button class="icon-btn" id="printBtn" aria-label="Print resume"><i class="fa-solid fa-print"></i></button>
+      <a href="mailto:mohammedmuneer5577@gmail.com" class="icon-btn" aria-label="Email" data-i18n-aria="aria_email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="https://www.linkedin.com/in/mohammed-al-khulaidi-696885393" target="_blank" rel="noopener" class="icon-btn" aria-label="LinkedIn" data-i18n-aria="aria_linkedin"><i class="fa-brands fa-linkedin"></i></a>
+      <button class="icon-btn" id="printBtn" aria-label="Print resume" data-i18n-aria="aria_print"><i class="fa-solid fa-print"></i></button>
     </div>
   </div>
 </footer>
 
-<button id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+<button id="toTop" aria-label="Back to top" data-i18n-aria="aria_totop"><i class="fa-solid fa-arrow-up"></i></button>
 
 </div><!-- /siteWrap -->
 
 <!-- ============================================================
      ATS PRINT RESUME — plain, single-column, A4.
-     Hidden on screen; shown only inside @media print (see CSS).
+     Hidden on screen; shown only inside @media print (see CSS),
+     and only the block matching the current page language prints.
      ============================================================ -->
 <div id="printResume">
-  <div class="pr-header">
-    <h1>Mohammed Muneer</h1>
-    <p class="pr-title">Information Technology Engineer — Oracle Database &amp; Laravel Backend Development</p>
-    <p class="pr-contact">Jeddah, Saudi Arabia &nbsp;|&nbsp; +966 55 392 9565 &nbsp;|&nbsp; mohammedmuneer5577@gmail.com &nbsp;|&nbsp; linkedin.com/in/mohammed-al-khulaidi-696885393</p>
-  </div>
 
-  <div class="pr-section">
-    <h2>Summary</h2>
-    <p>Information Technology Engineer with hands-on experience in Oracle Database administration, PL/SQL development, and backend web development using Laravel. Experienced providing technical support for the enterprise-level Onyx iX ERP system and managing virtualized server environments on Oracle Linux and VMware ESXi. Comfortable with network administration and client-facing technical consultation.</p>
-  </div>
+  <div class="pr-en" id="prEn">
+    <div class="pr-header">
+      <h1>Mohammed Muneer</h1>
+      <p class="pr-title">Information Technology Engineer — Oracle Database, Laravel &amp; Next.js Development</p>
+      <p class="pr-contact">Jeddah, Saudi Arabia &nbsp;|&nbsp; +966 55 392 9565 &nbsp;|&nbsp; mohammedmuneer5577@gmail.com &nbsp;|&nbsp; linkedin.com/in/mohammed-al-khulaidi-696885393</p>
+    </div>
 
-  <div class="pr-section">
-    <h2>Skills</h2>
-    <p><strong>Databases:</strong> Oracle Database (SQL, PL/SQL), Oracle DBA, MySQL</p>
-    <p><strong>Web Development:</strong> Laravel, PHP, Next.js, React, JavaScript, HTML5, CSS3, Bootstrap</p>
-    <p><strong>Systems &amp; Virtualization:</strong> Oracle Linux, VMware ESXi, Network Administration</p>
-    <p><strong>ERP &amp; Productivity:</strong> Onyx iX ERP Support, Microsoft Office Suite, Adobe Photoshop, Adobe Illustrator</p>
-  </div>
+    <div class="pr-section">
+      <h2>Summary</h2>
+      <p>Information Technology Engineer with hands-on experience in Oracle Database administration, PL/SQL development, and backend web development using Laravel and Next.js. Experienced providing technical support for the enterprise-level Onyx iX ERP system and managing virtualized server environments on Oracle Linux and VMware ESXi. Comfortable with network administration and client-facing technical consultation.</p>
+    </div>
 
-  <div class="pr-section">
-    <h2>Work Experience</h2>
-    <div class="pr-item">
-      <div class="pr-item-top"><strong>Technical Support Engineer</strong><span>12/2024 – Present</span></div>
-      <div class="pr-item-sub">Ultimate Solutions — Jeddah, Saudi Arabia</div>
-      <ul>
-        <li>Provide advanced technical support and troubleshooting for the enterprise-level Onyx iX ERP system.</li>
-        <li>Design, customize and optimize system reports to meet client business and financial requirements.</li>
-        <li>Assist clients with database deployment, migration and optimization for reliable operation.</li>
-        <li>Deliver professional consultation to end-users, ensuring smooth operations and high system availability.</li>
-        <li>Collaborate with technical teams to troubleshoot database queries and resolve application errors.</li>
-      </ul>
+    <div class="pr-section">
+      <h2>Skills</h2>
+      <p><strong>Databases:</strong> Oracle Database (SQL, PL/SQL), Oracle DBA, MySQL</p>
+      <p><strong>Web Development:</strong> Next.js, React, Laravel, PHP, JavaScript, HTML5, CSS3, Bootstrap</p>
+      <p><strong>Systems &amp; Virtualization:</strong> Oracle Linux, VMware ESXi, Network Administration</p>
+      <p><strong>ERP &amp; Productivity:</strong> Onyx iX ERP Support, Microsoft Office Suite, Adobe Photoshop, Adobe Illustrator</p>
+    </div>
+
+    <div class="pr-section">
+      <h2>Work Experience</h2>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>Technical Support Engineer</strong><span>12/2024 – Present</span></div>
+        <div class="pr-item-sub">Ultimate Solutions — Jeddah, Saudi Arabia</div>
+        <ul>
+          <li>Provide advanced technical support and troubleshooting for the enterprise-level Onyx iX ERP system.</li>
+          <li>Design, customize and optimize system reports to meet client business and financial requirements.</li>
+          <li>Assist clients with database deployment, migration and optimization for reliable operation.</li>
+          <li>Deliver professional consultation to end-users, ensuring smooth operations and high system availability.</li>
+          <li>Collaborate with technical teams to troubleshoot database queries and resolve application errors.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pr-section">
+      <h2>Projects</h2>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>Salon &amp; Hair Studio Management System</strong></div>
+        <div class="pr-item-sub">Next.js, React — admin, customer and supplier portals</div>
+      </div>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>University Management System</strong></div>
+        <div class="pr-item-sub">Next.js, React — staff and student portals</div>
+      </div>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>Wasl — Internal Issue &amp; Archive Tracker</strong></div>
+        <div class="pr-item-sub">PHP, MySQL — internal issue logging with electronic archiving</div>
+      </div>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>Task &amp; Document Archive App</strong></div>
+        <div class="pr-item-sub">Next.js, React, Expo — file/memo archiving with accounting entries</div>
+      </div>
+    </div>
+
+    <div class="pr-section">
+      <h2>Education</h2>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>Bachelor's Degree, Information Technology</strong><span>2023 – 2024</span></div>
+        <div class="pr-item-sub">University of Science and Technology — IT Department</div>
+      </div>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>Secondary School, Scientific Section</strong><span>2017 – 2018</span></div>
+        <div class="pr-item-sub">26 September School</div>
+      </div>
+    </div>
+
+    <div class="pr-section">
+      <h2>Certifications</h2>
+      <p>Cyber Security — University of Science and Technology (07/2023 – 08/2023)</p>
+      <p>International Computer Driving License (ICDL) — 2021 – 2022</p>
+      <p>Diploma of English — New Yemen Tech Institute (2017 – 2018)</p>
+      <p>Diploma of Accounting — 2023 – 2024</p>
+    </div>
+
+    <div class="pr-section">
+      <h2>Languages</h2>
+      <p>Arabic — Native &nbsp;|&nbsp; English — Professional Working Proficiency</p>
     </div>
   </div>
 
-  <div class="pr-section">
-    <h2>Projects</h2>
-    <div class="pr-item">
-      <div class="pr-item-top"><strong>Salon &amp; Hair Studio Management System</strong></div>
-      <div class="pr-item-sub">Next.js, React — admin, customer and supplier portals</div>
+  <div class="pr-ar" id="prAr" lang="ar" dir="rtl">
+    <div class="pr-header">
+      <h1>محمد منير</h1>
+      <p class="pr-title">مهندس تقنية معلومات — قواعد بيانات Oracle وتطوير Laravel وNext.js</p>
+      <p class="pr-contact">جدة، المملكة العربية السعودية &nbsp;|&nbsp; ‎+966 55 392 9565‎ &nbsp;|&nbsp; mohammedmuneer5577@gmail.com &nbsp;|&nbsp; linkedin.com/in/mohammed-al-khulaidi-696885393</p>
     </div>
-    <div class="pr-item">
-      <div class="pr-item-top"><strong>University Management System</strong></div>
-      <div class="pr-item-sub">Next.js, React — staff and student portals</div>
+
+    <div class="pr-section">
+      <h2>الملخص المهني</h2>
+      <p>مهندس تقنية معلومات لديه خبرة عملية في إدارة قواعد بيانات Oracle، وتطوير PL/SQL، وتطوير الباك اند باستخدام Laravel وNext.js. لديه خبرة في تقديم الدعم الفني لنظام Onyx iX ERP على مستوى المؤسسات، وإدارة بيئات الخوادم الافتراضية على Oracle Linux وVMware ESXi. يجيد إدارة الشبكات والاستشارات الفنية مع العملاء.</p>
     </div>
-    <div class="pr-item">
-      <div class="pr-item-top"><strong>Wasl — Internal Issue &amp; Archive Tracker</strong></div>
-      <div class="pr-item-sub">PHP, MySQL — internal issue logging with electronic archiving</div>
+
+    <div class="pr-section">
+      <h2>المهارات</h2>
+      <p><strong>قواعد البيانات:</strong> Oracle Database (SQL, PL/SQL)، Oracle DBA، MySQL</p>
+      <p><strong>تطوير الويب:</strong> Next.js، React، Laravel، PHP، JavaScript، HTML5، CSS3، Bootstrap</p>
+      <p><strong>الأنظمة والافتراضية:</strong> Oracle Linux، VMware ESXi، إدارة الشبكات</p>
+      <p><strong>ERP والإنتاجية:</strong> دعم نظام Onyx iX، حزمة Microsoft Office، Adobe Photoshop، Adobe Illustrator</p>
     </div>
-    <div class="pr-item">
-      <div class="pr-item-top"><strong>Task &amp; Document Archive App</strong></div>
-      <div class="pr-item-sub">Next.js, React, Expo — file/memo archiving with accounting entries</div>
+
+    <div class="pr-section">
+      <h2>الخبرة العملية</h2>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>مهندس دعم فني</strong><span>12/2024 – حتى الآن</span></div>
+        <div class="pr-item-sub">Ultimate Solutions — جدة، المملكة العربية السعودية</div>
+        <ul>
+          <li>تقديم دعم فني متقدم واستكشاف الأخطاء وإصلاحها لنظام Onyx iX ERP على مستوى المؤسسات.</li>
+          <li>تصميم وتخصيص وتحسين تقارير النظام لتلبية متطلبات العملاء المالية والتجارية.</li>
+          <li>مساعدة العملاء في نشر قواعد البيانات وترحيلها وتحسينها لضمان تشغيل موثوق.</li>
+          <li>تقديم استشارات مهنية للمستخدمين النهائيين لضمان سلاسة العمليات وتوافر النظام بشكل عالٍ.</li>
+          <li>التعاون مع الفرق التقنية لاستكشاف أخطاء استعلامات قواعد البيانات وحل مشاكل التطبيقات.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pr-section">
+      <h2>المشاريع</h2>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>نظام إدارة صالونات وكوافير</strong></div>
+        <div class="pr-item-sub">Next.js، React — بوابات الإدارة والعملاء والموردين</div>
+      </div>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>نظام إدارة الجامعات</strong></div>
+        <div class="pr-item-sub">Next.js، React — بوابتا المدرّس والطالب</div>
+      </div>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>نظام وصل — لتوثيق المشاكل الداخلية</strong></div>
+        <div class="pr-item-sub">PHP، MySQL — تسجيل المشاكل الداخلية للشركة مع الأرشفة الإلكترونية</div>
+      </div>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>تطبيق أرشفة الملفات والمهام</strong></div>
+        <div class="pr-item-sub">Next.js، React، Expo — أرشفة الملفات والمذكرات مع قيود محاسبية</div>
+      </div>
+    </div>
+
+    <div class="pr-section">
+      <h2>التعليم</h2>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>بكالوريوس تقنية المعلومات</strong><span>2023 – 2024</span></div>
+        <div class="pr-item-sub">جامعة العلوم والتكنولوجيا — قسم تقنية المعلومات</div>
+      </div>
+      <div class="pr-item">
+        <div class="pr-item-top"><strong>الثانوية العامة — القسم العلمي</strong><span>2017 – 2018</span></div>
+        <div class="pr-item-sub">مدرسة 26 سبتمبر</div>
+      </div>
+    </div>
+
+    <div class="pr-section">
+      <h2>الشهادات</h2>
+      <p>الأمن السيبراني — جامعة العلوم والتكنولوجيا (07/2023 – 08/2023)</p>
+      <p>رخصة القيادة الدولية لاستخدام الحاسوب (ICDL) — 2021 – 2022</p>
+      <p>دبلوم اللغة الإنجليزية — معهد نيو يمن التقني (2017 – 2018)</p>
+      <p>دبلوم المحاسبة — 2023 – 2024</p>
+    </div>
+
+    <div class="pr-section">
+      <h2>اللغات</h2>
+      <p>العربية — اللغة الأم &nbsp;|&nbsp; الإنجليزية — كفاءة مهنية احترافية</p>
     </div>
   </div>
 
-  <div class="pr-section">
-    <h2>Education</h2>
-    <div class="pr-item">
-      <div class="pr-item-top"><strong>Bachelor's Degree, Information Technology</strong><span>2023 – 2024</span></div>
-      <div class="pr-item-sub">University of Science and Technology — IT Department</div>
-    </div>
-    <div class="pr-item">
-      <div class="pr-item-top"><strong>Secondary School, Scientific Section</strong><span>2017 – 2018</span></div>
-      <div class="pr-item-sub">26 September School</div>
-    </div>
-  </div>
-
-  <div class="pr-section">
-    <h2>Certifications</h2>
-    <p>Cyber Security — University of Science and Technology (07/2023 – 08/2023)</p>
-    <p>International Computer Driving License (ICDL) — 2021 – 2022</p>
-    <p>Diploma of English — New Yemen Tech Institute (2017 – 2018)</p>
-    <p>Diploma of Accounting — 2023 – 2024</p>
-  </div>
-
-  <div class="pr-section">
-    <h2>Languages</h2>
-    <p>Arabic — Native &nbsp;|&nbsp; English — Professional Working Proficiency</p>
-  </div>
 </div>
 
 <script>
@@ -997,6 +1122,166 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
   "use strict";
   var root = document.documentElement;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ============================================================
+     i18n — EN / AR dictionary + apply function
+     ============================================================ */
+  var I18N = {
+    en: {
+      nav_profile:"PROFILE", nav_stack:"STACK", nav_work:"WORK", nav_build:"BUILD", nav_edu:"EDU", nav_certs:"CERTS", nav_contact:"CONTACT",
+      hero_h1:"Backend &amp; Database <span>Engineer</span>,<br>built on Oracle &amp; Laravel.",
+      hero_lede:"I'm Mohammed Muneer, an IT engineer in Jeddah, Saudi Arabia. I keep enterprise ERP systems running, write PL/SQL that holds up under load, and ship Laravel and Next.js backends that don't fall over.",
+      btn_download:"Download Resume", btn_contact:"Contact Me",
+      stat_lbl_year:"YEAR IN ENTERPRISE ERP", stat_lbl_stacks:"CORE STACKS · ORACLE / LARAVEL / NEXT.JS",
+      stat_lbl_certs:"PROFESSIONAL CERTIFICATIONS", stat_lbl_langs:"LANGUAGES SPOKEN",
+      badge_available:"Available for hire", badge_location:"Onsite &amp; remote · KSA",
+      about_h2:"Enterprise systems, kept dependable.",
+      about_p1:"I'm a results-driven <strong>Information Technology Engineer</strong> with hands-on expertise in <strong>Oracle Database administration</strong>, <strong>PL/SQL development</strong>, and backend architecture built with <strong>Laravel</strong> and <strong>Next.js</strong>.",
+      about_p2:"My day-to-day is enterprise ERP: I support, customize and troubleshoot the <strong>Onyx iX</strong> platform for clients, manage virtualized environments on <strong>Oracle Linux</strong> and <strong>VMware ESXi</strong>, and handle the network administration that keeps it all connected.",
+      about_p3:"I care about getting the database layer right first — the rest of the system is only as reliable as the queries underneath it.",
+      stat_card1:"Year of professional ERP support experience", stat_card2:"Enterprise ERP platform supported (Onyx iX)",
+      stat_card3:"Core technical domains — DB, backend, systems, network, design", stat_card4:"Completed diplomas &amp; technical certifications",
+      stack_h2:"Technical skills", stack_p:"The tools I use daily to keep enterprise data and backend systems running.",
+      skillDbTitle:"Databases", skillWebTitle:"Web Development", skillSysTitle:"Systems &amp; Virtualization", skillErpTitle:"ERP &amp; Productivity",
+      work_h2:"Experience", work_p:"Currently supporting enterprise ERP clients at Ultimate Solutions.",
+      work_role:"Technical Support Engineer — Ultimate Solutions", work_meta:"12/2024 — PRESENT",
+      work_li1:"Provide advanced technical support and troubleshooting for the enterprise-level Onyx iX ERP system.",
+      work_li2:"Design, customize and optimize system reports to meet client business and financial requirements.",
+      work_li3:"Assist clients with database deployment, migration and optimization for reliable operation.",
+      work_li4:"Deliver professional consultation to end-users, ensuring smooth operations and high system availability.",
+      work_li5:"Collaborate with technical teams to troubleshoot database queries and resolve application errors.",
+      work_pill:"Jeddah, Saudi Arabia", work_next_role:"Open to the next challenge", work_next_meta:"WHAT'S NEXT",
+      work_next_p:"Looking to grow into a broader backend or database engineering role where I can go deeper on Oracle performance tuning and Laravel/Next.js API architecture.",
+      build_h2:"Selected builds", build_p:"Live systems I designed and built end-to-end, each with multiple role-based portals — deployed and in real use.",
+      proj1_title:"Salon &amp; Hair Studio Management System", proj1_desc:"Full booking, staff and inventory management platform for salons, with dedicated apps for admins, customers and suppliers.",
+      proj2_title:"University Management System", proj2_desc:"A university-wide system for managing academic operations, with separate portals built for teaching staff and students.",
+      proj3_title:"Wasl — Internal Issue &amp; Archive Tracker", proj3_desc:"An internal system for logging and tracking company issues end-to-end, with full electronic document archiving.",
+      proj4_title:"Task &amp; Document Archive App", proj4_desc:"A mobile and web app for archiving files, memos and appointments, with built-in accounting entries to help organize daily tasks.",
+      link_admin:"Admin", link_customer:"Customer App", link_supplier:"Supplier Portal", link_staff:"Staff Login", link_student:"Student Login", link_livedemo:"Live Demo", link_apk:"Download APK",
+      edu_h2:"Education", edu1_role:"Bachelor's Degree, Information Technology", edu1_sub:"University of Science and Technology — IT Department.",
+      edu2_role:"Secondary School — Scientific Section", edu2_sub:"26 September School.",
+      certs_h2:"Certifications &amp; courses", cert1_title:"Cyber Security", cert1_sub:"University of Science and Technology · 07/2023 – 08/2023",
+      cert2_sub:"International Computer Driving License · 2021 – 2022", cert3_title:"Diploma of English", cert3_sub:"New Yemen Tech Institute · 2017 – 2018",
+      cert4_title:"Diploma of Accounting",
+      focus_eyebrow:"FOCUS", focus_h2:"Where I add the most value",
+      ach1_title:"Enterprise ERP", ach1_p:"Hands-on Onyx iX support &amp; customization.",
+      ach2_title:"Oracle Database", ach2_p:"SQL, PL/SQL and day-to-day DBA tasks.",
+      ach3_title:"Backend Architecture", ach3_p:"Laravel &amp; Next.js backends built to last.",
+      ach4_title:"Systems &amp; Network", ach4_p:"Oracle Linux, VMware ESXi, networking.",
+      languages_eyebrow:"LANGUAGES", languages_h2:"Languages",
+      lang_arabic:"Arabic", lang_arabic_level:"Native", lang_english:"English", lang_english_level:"Professional",
+      why_eyebrow:"WHY ME", why_h2:"Why hire me",
+      why1_title:"Problem-solving", why1_p:"I trace issues to the query, config or process actually causing them.",
+      why2_title:"Communication", why2_p:"I translate technical detail into something a client or teammate can act on.",
+      why3_title:"Analytical thinking", why3_p:"Comfortable reading through data, reports and logs to find the root cause.",
+      why4_title:"Fast learner", why4_p:"Adaptable to new tools, systems and client requirements without hand-holding.",
+      why5_title:"Enterprise experience", why5_p:"Already comfortable in production ERP environments with real client stakes.",
+      why6_title:"Reliable &amp; organized", why6_p:"Plans work, manages time, and delivers what was committed to.",
+      contact_h2:"Get in touch", contact_p:"Open to full-time roles and freelance work involving Oracle, Laravel, Next.js or ERP support.",
+      label_phone:"Phone", label_email:"Email", label_linkedin:"LinkedIn",
+      contact_cta_h2:"Let's build something reliable.", contact_cta_p:"Jeddah, Saudi Arabia · available for onsite and remote work", btn_email:"Email Me",
+      footer_credit:"Designed &amp; built by Mohammed Muneer ·",
+      aria_theme:"Toggle dark and light theme", aria_burger:"Open menu", aria_print:"Print resume", aria_totop:"Back to top",
+      aria_email:"Email", aria_linkedin:"LinkedIn", aria_copy_phone:"Copy phone number", aria_copy_email:"Copy email address"
+    },
+    ar: {
+      nav_profile:"الملف", nav_stack:"المهارات", nav_work:"الخبرة", nav_build:"المشاريع", nav_edu:"التعليم", nav_certs:"الشهادات", nav_contact:"تواصل",
+      hero_h1:"مهندس أنظمة خلفية <span>وقواعد بيانات</span>،<br>مبني على Oracle وLaravel.",
+      hero_lede:"أنا محمد منير، مهندس تقنية معلومات في جدة، المملكة العربية السعودية. أحافظ على استقرار أنظمة ERP المؤسسية، وأكتب استعلامات PL/SQL تتحمل الضغط، وأبني أنظمة خلفية بلغة Laravel وNext.js لا تتعطل.",
+      btn_download:"تحميل السيرة الذاتية", btn_contact:"تواصل معي",
+      stat_lbl_year:"سنة خبرة في دعم أنظمة ERP", stat_lbl_stacks:"تقنيات أساسية · Oracle / Laravel / Next.js",
+      stat_lbl_certs:"شهادات مهنية معتمدة", stat_lbl_langs:"لغات أتحدث بها",
+      badge_available:"متاح للعمل", badge_location:"حضوريًا وعن بُعد · السعودية",
+      about_h2:"أنظمة مؤسسية، تعمل بثبات.",
+      about_p1:"أنا <strong>مهندس تقنية معلومات</strong> ذو نتائج ملموسة، ولدي خبرة عملية في <strong>إدارة قواعد بيانات Oracle</strong>، و<strong>تطوير PL/SQL</strong>، وبناء أنظمة خلفية باستخدام <strong>Laravel</strong> و<strong>Next.js</strong>.",
+      about_p2:"عملي اليومي يتمحور حول أنظمة ERP المؤسسية: أدعم وأخصص وأستكشف أخطاء منصة <strong>Onyx iX</strong> لصالح العملاء، وأدير بيئات افتراضية على <strong>Oracle Linux</strong> و<strong>VMware ESXi</strong>، وأتولى إدارة الشبكات التي تربط كل ذلك.",
+      about_p3:"أهتم أولًا بضبط طبقة قاعدة البيانات بشكل صحيح — فباقي النظام لا يكون أكثر موثوقية من الاستعلامات التي يقوم عليها.",
+      stat_card1:"سنة من الخبرة المهنية في دعم أنظمة ERP", stat_card2:"نظام ERP مؤسسي مدعوم (Onyx iX)",
+      stat_card3:"مجالات تقنية أساسية — قواعد بيانات، باك اند، أنظمة، شبكات، تصميم", stat_card4:"دبلومات وشهادات تقنية مكتملة",
+      stack_h2:"المهارات التقنية", stack_p:"الأدوات التي أستخدمها يوميًا للحفاظ على بيانات ونظم الباك اند المؤسسية.",
+      skillDbTitle:"قواعد البيانات", skillWebTitle:"تطوير الويب", skillSysTitle:"الأنظمة والافتراضية", skillErpTitle:"ERP والإنتاجية",
+      work_h2:"الخبرة العملية", work_p:"أدعم حاليًا عملاء أنظمة ERP المؤسسية في Ultimate Solutions.",
+      work_role:"مهندس دعم فني — Ultimate Solutions", work_meta:"12/2024 — حتى الآن",
+      work_li1:"تقديم دعم فني متقدم واستكشاف الأخطاء وإصلاحها لنظام Onyx iX ERP على مستوى المؤسسات.",
+      work_li2:"تصميم وتخصيص وتحسين تقارير النظام لتلبية متطلبات العملاء المالية والتجارية.",
+      work_li3:"مساعدة العملاء في نشر قواعد البيانات وترحيلها وتحسينها لضمان تشغيل موثوق.",
+      work_li4:"تقديم استشارات مهنية للمستخدمين النهائيين لضمان سلاسة العمليات وتوافر النظام بشكل عالٍ.",
+      work_li5:"التعاون مع الفرق التقنية لاستكشاف أخطاء استعلامات قواعد البيانات وحل مشاكل التطبيقات.",
+      work_pill:"جدة، المملكة العربية السعودية", work_next_role:"منفتح على التحدي القادم", work_next_meta:"الخطوة القادمة",
+      work_next_p:"أتطلع للانتقال إلى دور أوسع في هندسة الباك اند أو قواعد البيانات، حيث أتعمق أكثر في ضبط أداء Oracle وبناء واجهات Laravel وNext.js البرمجية.",
+      build_h2:"أبرز المشاريع", build_p:"أنظمة فعلية صممتها وبنيتها من الألف إلى الياء، كل منها بعدة بوابات حسب الدور — منشورة وقيد الاستخدام الفعلي.",
+      proj1_title:"نظام إدارة صالونات وكوافير", proj1_desc:"منصة متكاملة لإدارة الحجوزات والموظفين والمخزون للصالونات، مع تطبيقات مخصصة للإدارة والعملاء والموردين.",
+      proj2_title:"نظام إدارة الجامعات", proj2_desc:"نظام شامل لإدارة العمليات الأكاديمية بالجامعة، مع بوابات منفصلة للمدرّسين والطلاب.",
+      proj3_title:"نظام وصل — لتوثيق المشاكل الداخلية", proj3_desc:"نظام داخلي لتسجيل ومتابعة مشاكل الشركة من البداية للنهاية، مع أرشفة إلكترونية كاملة للمستندات.",
+      proj4_title:"تطبيق أرشفة الملفات والمهام", proj4_desc:"تطبيق للجوال والويب لأرشفة الملفات والمذكرات والمواعيد، مع قيود محاسبية مدمجة تساعد على تنظيم المهام اليومية.",
+      link_admin:"لوحة التحكم", link_customer:"تطبيق العملاء", link_supplier:"بوابة الموردين", link_staff:"دخول المدرّس", link_student:"دخول الطالب", link_livedemo:"عرض مباشر", link_apk:"تحميل التطبيق",
+      edu_h2:"التعليم", edu1_role:"بكالوريوس تقنية المعلومات", edu1_sub:"جامعة العلوم والتكنولوجيا — قسم تقنية المعلومات.",
+      edu2_role:"الثانوية العامة — القسم العلمي", edu2_sub:"مدرسة 26 سبتمبر.",
+      certs_h2:"الشهادات والدورات", cert1_title:"الأمن السيبراني", cert1_sub:"جامعة العلوم والتكنولوجيا · 07/2023 – 08/2023",
+      cert2_sub:"رخصة القيادة الدولية لاستخدام الحاسوب · 2021 – 2022", cert3_title:"دبلوم اللغة الإنجليزية", cert3_sub:"معهد نيو يمن التقني · 2017 – 2018",
+      cert4_title:"دبلوم المحاسبة",
+      focus_eyebrow:"التركيز", focus_h2:"أين أضيف القيمة الأكبر",
+      ach1_title:"أنظمة ERP المؤسسية", ach1_p:"دعم وتخصيص عملي لنظام Onyx iX.",
+      ach2_title:"قواعد بيانات Oracle", ach2_p:"SQL وPL/SQL ومهام إدارة قواعد البيانات اليومية.",
+      ach3_title:"هندسة الباك اند", ach3_p:"أنظمة خلفية مبنية على Laravel وNext.js لتدوم.",
+      ach4_title:"الأنظمة والشبكات", ach4_p:"Oracle Linux، وVMware ESXi، والشبكات.",
+      languages_eyebrow:"اللغات", languages_h2:"اللغات",
+      lang_arabic:"العربية", lang_arabic_level:"اللغة الأم", lang_english:"الإنجليزية", lang_english_level:"احترافية",
+      why_eyebrow:"لماذا أنا", why_h2:"لماذا توظفني",
+      why1_title:"حل المشكلات", why1_p:"أتتبع المشاكل حتى أصل إلى الاستعلام أو الإعداد أو العملية المسببة فعليًا.",
+      why2_title:"التواصل", why2_p:"أترجم التفاصيل التقنية إلى شيء يمكن للعميل أو الزميل التصرف بناءً عليه.",
+      why3_title:"التفكير التحليلي", why3_p:"مرتاح في قراءة البيانات والتقارير والسجلات للوصول إلى السبب الجذري.",
+      why4_title:"سريع التعلم", why4_p:"قابل للتكيف مع أدوات وأنظمة ومتطلبات عملاء جديدة دون الحاجة لمتابعة مستمرة.",
+      why5_title:"خبرة مؤسسية", why5_p:"مرتاح بالفعل في بيئات ERP الإنتاجية ذات المخاطر الحقيقية للعملاء.",
+      why6_title:"موثوق ومنظّم", why6_p:"يخطط للعمل، يدير الوقت، وينجز ما تم الالتزام به.",
+      contact_h2:"تواصل معي", contact_p:"منفتح على الوظائف بدوام كامل والأعمال الحرة المتعلقة بـ Oracle أو Laravel أو Next.js أو دعم أنظمة ERP.",
+      label_phone:"الهاتف", label_email:"البريد الإلكتروني", label_linkedin:"لينكدإن",
+      contact_cta_h2:"لنبني شيئًا موثوقًا معًا.", contact_cta_p:"جدة، المملكة العربية السعودية · متاح للعمل حضوريًا وعن بُعد", btn_email:"راسلني",
+      footer_credit:"صمّمه وطوّره محمد منير ·",
+      aria_theme:"تبديل الوضع الداكن والفاتح", aria_burger:"فتح القائمة", aria_print:"طباعة السيرة الذاتية", aria_totop:"العودة للأعلى",
+      aria_email:"البريد الإلكتروني", aria_linkedin:"لينكدإن", aria_copy_phone:"نسخ رقم الهاتف", aria_copy_email:"نسخ البريد الإلكتروني"
+    }
+  };
+  var HERO_ROLES = {
+    en:[
+      { q:"SELECT title FROM roles WHERE candidate='Mohammed Muneer';", r:"Backend & Database Engineer" },
+      { q:"SELECT skill FROM stack WHERE tool='Oracle PL/SQL';", r:"PL/SQL Developer" },
+      { q:"SELECT skill FROM stack WHERE tool='Next.js';", r:"Next.js Developer" },
+      { q:"SELECT focus FROM work WHERE system='Onyx iX';", r:"ERP Support Engineer" }
+    ],
+    ar:[
+      { q:"SELECT title FROM roles WHERE candidate='Mohammed Muneer';", r:"مهندس أنظمة خلفية وقواعد بيانات" },
+      { q:"SELECT skill FROM stack WHERE tool='Oracle PL/SQL';", r:"مطوّر PL/SQL" },
+      { q:"SELECT skill FROM stack WHERE tool='Next.js';", r:"مطوّر Next.js" },
+      { q:"SELECT focus FROM work WHERE system='Onyx iX';", r:"مهندس دعم أنظمة ERP" }
+    ]
+  };
+  var currentLang = 'en';
+
+  function applyLang(lang){
+    currentLang = lang;
+    var dict = I18N[lang];
+    root.setAttribute('lang', lang);
+    root.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-html');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+      var key = el.getAttribute('data-i18n-aria');
+      if(dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
+    });
+    var langToggleBtn = document.getElementById('langToggle');
+    if(langToggleBtn){
+      langToggleBtn.textContent = lang === 'ar' ? 'EN' : 'AR';
+      langToggleBtn.setAttribute('aria-label', lang === 'ar' ? 'Switch language to English' : 'Switch language to Arabic');
+    }
+    try{ localStorage.setItem('mm-lang', lang); }catch(e){}
+  }
 
   /* ---------- Loader ---------- */
   window.addEventListener('load', function(){
@@ -1017,6 +1302,17 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
   applyTheme(saved || 'dark');
   themeToggle.addEventListener('click', function(){
     applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  /* ---------- Language toggle (persisted) ---------- */
+  var savedLang = null;
+  try{ savedLang = localStorage.getItem('mm-lang'); }catch(e){}
+  applyLang(savedLang || 'en');
+  document.getElementById('langToggle').addEventListener('click', function(){
+    applyLang(currentLang === 'ar' ? 'en' : 'ar');
+    ri = 0;
+    cycleGen++;
+    if(qEl){ runCycle(); }
   });
 
   /* ---------- Mobile nav ---------- */
@@ -1109,21 +1405,17 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
   }
 
   /* ---------- Hero console: typed SQL + rotating role output ---------- */
-  var roles = [
-    { q: "SELECT title FROM roles WHERE candidate='Mohammed Muneer';", r: "Backend & Database Engineer" },
-    { q: "SELECT skill FROM stack WHERE tool='Oracle PL/SQL';", r: "PL/SQL Developer" },
-    { q: "SELECT focus FROM work WHERE system='Onyx iX';", r: "ERP Support Engineer" },
-    { q: "SELECT stack FROM projects WHERE framework='Laravel';", r: "Full-Stack Web Developer" }
-  ];
   var qEl = document.getElementById('typedQuery');
   var rEl = document.getElementById('typedResult');
   var ri = 0;
+  var cycleGen = 0;
 
-  function typeText(el, text, cb){
+  function typeText(el, text, gen, cb){
     el.textContent = '';
     var i = 0;
     if(reduceMotion){ el.textContent = text; cb && cb(); return; }
     var t = setInterval(function(){
+      if(gen !== cycleGen){ clearInterval(t); return; }
       el.textContent = text.slice(0, i);
       i++;
       if(i > text.length){ clearInterval(t); cb && cb(); }
@@ -1135,16 +1427,21 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       '<span class="mono" style="color:var(--text-dim);">+-------------------------------------+</span>';
   }
   function runCycle(){
+    var gen = cycleGen;
+    var roles = HERO_ROLES[currentLang] || HERO_ROLES.en;
     var item = roles[ri % roles.length];
-    typeText(qEl, item.q, function(){
+    typeText(qEl, item.q, gen, function(){
+      if(gen !== cycleGen) return;
       setTimeout(function(){
+        if(gen !== cycleGen) return;
         showResult(item.r);
         ri++;
-        setTimeout(runCycle, 2600);
+        setTimeout(function(){ if(gen === cycleGen) runCycle(); }, 2600);
       }, 300);
     });
   }
   if(qEl){ runCycle(); }
+
 
   /* ---------- Button ripple ---------- */
   document.querySelectorAll('.btn').forEach(function(btn){
