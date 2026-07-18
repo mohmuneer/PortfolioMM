@@ -97,7 +97,12 @@ html[data-theme="light"]{
    1. RESET
    ============================================================ */
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
-html{ scroll-behavior:smooth; scroll-padding-top:84px; }
+/* html{ scroll-behavior:smooth; scroll-padding-top:84px; } */
+  html, body{
+  overflow-x:hidden;
+  width:100%;
+  max-width:100%;
+}
 body{
   background:var(--bg);
   color:var(--text);
@@ -141,6 +146,9 @@ html[dir="rtl"] .copy-btn{ margin-left:0; margin-right:auto; }
 html[dir="rtl"] #toTop{ right:auto; left:26px; }
 html[dir="rtl"] .tl-list li{ padding-left:0; padding-right:18px; }
 html[dir="rtl"] .tl-list li::before{ left:auto; right:0; }
+  @media (max-width:640px){
+  .badge-float{ left:0; }  /* هذا تمام */
+}
 @media (max-width:640px){ html[dir="rtl"] .badge-float{ right:0; } }
 
 @media (prefers-reduced-motion: reduce){
@@ -464,13 +472,30 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 }
 
 /* mobile drawer */
-.mobile-nav{
-  position:fixed; inset:76px 0 0 0; background:var(--bg); z-index:400; padding:30px 24px;
-  transform:translateX(100%); transition:transform .4s var(--ease);
+/* mobile drawer */
+.mobile-nav {
+  position: fixed;
+  inset: 76px 0 0 0;
+  background: var(--bg);
+  z-index: 400;
+  padding: 30px 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s var(--ease), visibility .3s var(--ease);
 }
-.mobile-nav.open{ transform:translateX(0); }
+.mobile-nav.open {
+  opacity: 1;
+  visibility: visible;
+}
 .mobile-nav a{ display:block; padding:16px 0; border-bottom:1px solid var(--border); font-family:'IBM Plex Mono',monospace; font-size:.95rem; }
-
+.console {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md);
+  font-family: 'IBM Plex Mono',monospace; font-size: .86rem; box-shadow: var(--shadow);
+  margin-bottom: 34px; 
+  width: 100%; /* أضف هذا السطر لحل مشكلة العرض */
+  max-width: 560px; overflow: hidden;
+  direction: ltr; text-align: left;
+}
 /* ============================================================
    16. ATS PRINT RESUME
    A dedicated, plain, single-column A4 resume — completely
