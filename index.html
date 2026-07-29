@@ -503,47 +503,62 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
    ATS-parsable (no icons, no color-only meaning, no tables,
    no multi-column layout).
    ============================================================ */
-#printResume{ display:none; }
-#printResume .pr-en, #printResume .pr-ar{ display:none; }
+#printResume, #printLetter{ display:none; }
+#printResume .pr-en, #printResume .pr-ar,
+#printLetter .pr-en, #printLetter .pr-ar{ display:none; }
 
 @media print{
   @page{ size:A4; margin:14mm 16mm; }
   html,body{ background:#fff !important; }
   #siteWrap{ display:none !important; }
-  #printResume{ display:block !important; }
-  html[lang="en"] #printResume .pr-en{ display:block !important; }
-  html[lang="ar"] #printResume .pr-ar{ display:block !important; }
 
-  #printResume{
+  /* Default (Download Resume / footer print icon): resume only */
+  #printResume{ display:block !important; }
+
+  /* Cover-letter print buttons toggle these on <body> via JS before calling print() */
+  body.print-letter #printResume{ display:none !important; }
+  body.print-letter #printLetter{ display:block !important; }
+  body.print-letter.print-letter-cv #printResume{ display:block !important; page-break-before:always; }
+
+  html[lang="en"] .print-doc .pr-en{ display:block !important; }
+  html[lang="ar"] .print-doc .pr-ar{ display:block !important; }
+
+  .print-doc{
     color:#111827;
     font-family:'Inter',Arial,Helvetica,sans-serif;
     font-size:10.6pt;
     line-height:1.5;
   }
-  #printResume .pr-ar{ font-family:'IBM Plex Sans Arabic',Arial,sans-serif; text-align:right; }
-  #printResume .pr-ar .pr-item-top, #printResume .pr-ar .pr-contact{ direction:rtl; }
-  #printResume .pr-ar ul{ padding-left:0; padding-right:14pt; }
-  #printResume h1{ font-size:19pt; font-weight:800; letter-spacing:0; color:#0F172A; margin-bottom:4pt; }
-  #printResume .pr-title{ font-size:11pt; font-weight:600; color:#1E293B; margin-bottom:5pt; }
-  #printResume .pr-contact{ font-size:9.5pt; color:#334155; margin-bottom:12pt; }
-  #printResume .pr-header{ border-bottom:1.5pt solid #0F172A; padding-bottom:10pt; margin-bottom:14pt; }
-  #printResume .pr-section{ margin-bottom:13pt; page-break-inside:avoid; }
-  #printResume h2{
+  .print-doc .pr-ar{ font-family:'IBM Plex Sans Arabic',Arial,sans-serif; text-align:right; }
+  .print-doc .pr-ar .pr-item-top, .print-doc .pr-ar .pr-contact, .print-doc .pr-ar .pr-meta-row{ direction:rtl; }
+  .print-doc .pr-ar ul{ padding-left:0; padding-right:14pt; }
+  .print-doc h1{ font-size:19pt; font-weight:800; letter-spacing:0; color:#0F172A; margin-bottom:4pt; }
+  .print-doc .pr-title{ font-size:11pt; font-weight:600; color:#1E293B; margin-bottom:5pt; }
+  .print-doc .pr-contact{ font-size:9.5pt; color:#334155; margin-bottom:12pt; }
+  .print-doc .pr-header{ border-bottom:1.5pt solid #0F172A; padding-bottom:10pt; margin-bottom:14pt; }
+  .print-doc .pr-section{ margin-bottom:13pt; page-break-inside:avoid; }
+  .print-doc h2{
     font-size:11.5pt; font-weight:800; text-transform:uppercase; letter-spacing:.06em;
     color:#0F172A; border-bottom:.75pt solid #94A3B8; padding-bottom:3pt; margin-bottom:8pt;
   }
-  #printResume .pr-ar h2{ text-transform:none; letter-spacing:0; }
-  #printResume p{ margin-bottom:5pt; }
-  #printResume .pr-item{ margin-bottom:9pt; page-break-inside:avoid; }
-  #printResume .pr-item-top{ display:flex; justify-content:space-between; font-size:10.6pt; }
-  #printResume .pr-item-top strong{ font-weight:700; }
-  #printResume .pr-item-top span{ font-weight:500; color:#334155; }
-  #printResume .pr-item-sub{ font-style:italic; color:#334155; margin-bottom:4pt; }
-  #printResume .pr-ar .pr-item-sub{ font-style:normal; }
-  #printResume ul{ padding-left:14pt; list-style:disc; }
-  #printResume li{ margin-bottom:3pt; }
-  #printResume strong{ font-weight:700; }
-  #printResume a{ color:#111827; text-decoration:none; }
+  .print-doc .pr-ar h2{ text-transform:none; letter-spacing:0; }
+  .print-doc p{ margin-bottom:5pt; }
+  .print-doc .pr-item{ margin-bottom:9pt; page-break-inside:avoid; }
+  .print-doc .pr-item-top{ display:flex; justify-content:space-between; font-size:10.6pt; }
+  .print-doc .pr-item-top strong{ font-weight:700; }
+  .print-doc .pr-item-top span{ font-weight:500; color:#334155; }
+  .print-doc .pr-item-sub{ font-style:italic; color:#334155; margin-bottom:4pt; }
+  .print-doc .pr-ar .pr-item-sub{ font-style:normal; }
+  .print-doc ul{ padding-left:14pt; list-style:disc; }
+  .print-doc li{ margin-bottom:3pt; }
+  .print-doc strong{ font-weight:700; }
+  .print-doc a{ color:#111827; text-decoration:none; }
+
+  /* Cover-letter specific bits */
+  .print-doc .pr-meta-row{ display:flex; justify-content:space-between; font-size:9.5pt; color:#334155; margin-bottom:14pt; }
+  .print-doc .pr-letter-title{ font-size:12.5pt; font-weight:700; color:#0F172A; margin-bottom:12pt; }
+  .print-doc .pr-sign{ margin-top:16pt; }
+  .print-doc .pr-sign .pr-name{ font-weight:700; color:#0F172A; margin-top:2pt; }
 }
 </style>
 </head>
@@ -571,6 +586,7 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       <a href="#stack" data-nav data-i18n="nav_stack">STACK</a>
       <a href="#work" data-nav data-i18n="nav_work">WORK</a>
       <a href="#build" data-nav data-i18n="nav_build">BUILD</a>
+      <a href="#letter" data-nav data-i18n="nav_letter">LETTER</a>
       <a href="#edu" data-nav data-i18n="nav_edu">EDU</a>
       <a href="#contact" data-nav data-i18n="nav_contact">CONTACT</a>
     </nav>
@@ -589,6 +605,7 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
     <a href="#stack" data-i18n="nav_stack">STACK</a>
     <a href="#work" data-i18n="nav_work">WORK</a>
     <a href="#build" data-i18n="nav_build">BUILD</a>
+    <a href="#letter" data-i18n="nav_letter">LETTER</a>
     <a href="#edu" data-i18n="nav_edu">EDU</a>
     <a href="#certs" data-i18n="nav_certs">CERTS</a>
     <a href="#contact" data-i18n="nav_contact">CONTACT</a>
@@ -827,6 +844,41 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 </section>
 
 <!-- ============================================================
+     COVER LETTER
+     ============================================================ -->
+<section id="letter">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow" data-i18n="nav_letter">LETTER</p>
+      <h2 data-i18n="letter_h2">Cover letter</h2>
+      <p data-i18n="letter_p">A ready-to-send letter, customizable per application — printable on its own or together with the CV above.</p>
+    </div>
+    <div class="tl-card reveal" style="max-width:760px;">
+      <div class="tl-top">
+        <span class="tl-role" data-i18n="letter_role">Application for Freelance Website Developer</span>
+        <span class="tl-meta" id="letterDate"></span>
+      </div>
+      <div style="color:var(--text-dim); font-size:.94rem; line-height:1.8;">
+        <p style="margin-bottom:14px;" data-i18n="letter_salutation">Dear Hiring Manager,</p>
+        <p style="margin-bottom:14px;" data-i18n="letter_p1">I'm writing to apply for the Freelance Website Developer position at <strong style="color:var(--text);">Helf Group</strong>. I'm an IT engineer based in Jeddah who builds backend systems and web platforms end-to-end — from the database layer up through the interface — and I'd like to bring that same rigor to your projects.</p>
+        <p style="margin-bottom:14px;" data-i18n="letter_p2">Day to day, I work across Next.js and React on the front end, Laravel on the back end, and Oracle SQL/PL-SQL and MySQL underneath. In my current role supporting an enterprise ERP platform, I customize system reports, manage database deployments and migrations, and resolve issues directly with end-users — work that has sharpened both my technical judgment and my ability to explain it clearly to non-technical stakeholders.</p>
+        <p style="margin-bottom:14px;" data-i18n="letter_p3">Beyond my job, I've independently designed and shipped several multi-portal web systems: a salon management platform with separate admin, customer, and supplier apps; a university system with staff and student portals; an internal issue-tracking and e-archiving tool; and an AI-driven HR agent that scores candidates against a role. Each was built, deployed, and is in real use today — not just a prototype.</p>
+        <p style="margin-bottom:14px;" data-i18n="letter_p4">I understand the Saudi market, communicate comfortably in English, and work well independently on freelance, deadline-driven engagements. I'd welcome the chance to discuss how I can support Helf Group's growth with reliable, well-built websites.</p>
+        <p data-i18n="letter_p5">Thank you for your time and consideration.</p>
+      </div>
+      <div style="margin-top:22px;">
+        <p style="color:var(--text-dim); font-size:.94rem;" data-i18n="letter_closing">Sincerely,</p>
+        <p style="font-weight:700;">Mohammed Muneer</p>
+      </div>
+      <div style="margin-top:26px; display:flex; gap:14px; flex-wrap:wrap;">
+        <button class="btn btn-ghost" id="printLetterOnlyBtn"><i class="fa-solid fa-print"></i><span data-i18n="btn_print_letter">Print Letter Only</span></button>
+        <button class="btn btn-primary" id="printLetterCvBtn"><i class="fa-solid fa-file-arrow-down"></i><span data-i18n="btn_print_letter_cv">Print Letter + CV</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      EDUCATION
      ============================================================ -->
 <section id="edu" class="section-alt">
@@ -982,11 +1034,75 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 </div><!-- /siteWrap -->
 
 <!-- ============================================================
+     PRINT COVER LETTER — plain, single-column, A4, same visual
+     language as the print resume above. Hidden on screen; only
+     shown in @media print when body.print-letter is toggled by
+     the "Print Letter" buttons in the Cover Letter section.
+     ============================================================ -->
+<div id="printLetter" class="print-doc">
+
+  <div class="pr-en">
+    <div class="pr-header">
+      <h1>Mohammed Muneer</h1>
+      <p class="pr-title">Backend &amp; Database Engineer — Oracle · PL/SQL · Laravel · Next.js</p>
+      <p class="pr-contact">Jeddah, Saudi Arabia &nbsp;|&nbsp; +966 55 392 9565 &nbsp;|&nbsp; mohammedmuneer5577@gmail.com &nbsp;|&nbsp; linkedin.com/in/mohammed-al-khulaidi-696885393</p>
+    </div>
+
+    <div class="pr-meta-row">
+      <span>To: Hiring Manager, Helf Group</span>
+      <span id="printLetterDateEn"></span>
+    </div>
+
+    <p class="pr-letter-title">Application for Freelance Website Developer — Remote</p>
+
+    <p>Dear Hiring Manager,</p>
+    <p>I'm writing to apply for the Freelance Website Developer position at <strong>Helf Group</strong>. I'm an IT engineer based in Jeddah who builds backend systems and web platforms end-to-end — from the database layer up through the interface — and I'd like to bring that same rigor to your projects.</p>
+    <p>Day to day, I work across Next.js and React on the front end, Laravel on the back end, and Oracle SQL/PL-SQL and MySQL underneath. In my current role supporting an enterprise ERP platform, I customize system reports, manage database deployments and migrations, and resolve issues directly with end-users — work that has sharpened both my technical judgment and my ability to explain it clearly to non-technical stakeholders.</p>
+    <p>Beyond my job, I've independently designed and shipped several multi-portal web systems: a salon management platform with separate admin, customer, and supplier apps; a university system with staff and student portals; an internal issue-tracking and e-archiving tool; and an AI-driven HR agent that scores candidates against a role. Each was built, deployed, and is in real use today — not just a prototype.</p>
+    <p>I understand the Saudi market, communicate comfortably in English, and work well independently on freelance, deadline-driven engagements. I'd welcome the chance to discuss how I can support Helf Group's growth with reliable, well-built websites.</p>
+    <p>Thank you for your time and consideration.</p>
+
+    <div class="pr-sign">
+      <span>Sincerely,</span>
+      <div class="pr-name">Mohammed Muneer</div>
+    </div>
+  </div>
+
+  <div class="pr-ar" lang="ar" dir="rtl">
+    <div class="pr-header">
+      <h1>محمد منير</h1>
+      <p class="pr-title">مهندس أنظمة خلفية وقواعد بيانات — Oracle · PL/SQL · Laravel · Next.js</p>
+      <p class="pr-contact">جدة، المملكة العربية السعودية &nbsp;|&nbsp; ‎+966 55 392 9565‎ &nbsp;|&nbsp; mohammedmuneer5577@gmail.com &nbsp;|&nbsp; linkedin.com/in/mohammed-al-khulaidi-696885393</p>
+    </div>
+
+    <div class="pr-meta-row">
+      <span>إلى: مدير التوظيف، Helf Group</span>
+      <span id="printLetterDateAr"></span>
+    </div>
+
+    <p class="pr-letter-title">طلب التقديم على وظيفة مطوّر مواقع مستقل — عن بُعد</p>
+
+    <p>السيد/ة مدير التوظيف المحترم،</p>
+    <p>أتقدم بطلبي لشغل وظيفة مطوّر مواقع مستقل لدى <strong>Helf Group</strong>. أنا مهندس تقنية معلومات مقيم في جدة، أبني الأنظمة الخلفية ومنصات الويب من الألف إلى الياء — بدءًا من طبقة قاعدة البيانات وصولًا إلى الواجهة — وأتطلع لتقديم الخبرة نفسها لمشاريعكم.</p>
+    <p>أعمل يوميًا على Next.js وReact في الواجهة الأمامية، وLaravel في الجزء الخلفي، وOracle SQL/PL-SQL وMySQL في قاعدة البيانات. في دوري الحالي في دعم نظام ERP مؤسسي، أخصص تقارير النظام، وأدير عمليات نشر وترحيل قواعد البيانات، وأحل المشاكل مباشرة مع المستخدمين النهائيين — وهو ما صقل حكمي التقني وقدرتي على شرحه بوضوح لغير المختصين.</p>
+    <p>إلى جانب عملي، صممت وأطلقت بشكل مستقل عدة أنظمة ويب متعددة البوابات: منصة إدارة صالونات ببوابات منفصلة للإدارة والعملاء والموردين، ونظام جامعي ببوابتي المدرّس والطالب، وأداة داخلية لتتبع المشاكل والأرشفة الإلكترونية، ووكيل ذكاء اصطناعي للموارد البشرية يقيّم المتقدمين مقابل الوظيفة. كل هذه الأنظمة مبنية ومنشورة وقيد الاستخدام الفعلي اليوم — وليست مجرد نماذج أولية.</p>
+    <p>أفهم طبيعة السوق السعودي، وأتواصل بارتياح باللغة الإنجليزية، وأعمل بكفاءة بشكل مستقل في المشاريع الحرة ذات المواعيد النهائية. يسعدني مناقشة كيف يمكنني دعم نمو Helf Group من خلال مواقع موثوقة ومبنية بعناية.</p>
+    <p>شاكرًا لكم وقتكم واهتمامكم.</p>
+
+    <div class="pr-sign">
+      <span>مع خالص التقدير،</span>
+      <div class="pr-name">محمد منير</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================================
      ATS PRINT RESUME — plain, single-column, A4.
      Hidden on screen; shown only inside @media print (see CSS),
      and only the block matching the current page language prints.
      ============================================================ -->
-<div id="printResume">
+<div id="printResume" class="print-doc">
 
   <div class="pr-en" id="prEn">
     <div class="pr-header">
@@ -1160,6 +1276,8 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
 
 </div>
 
+
+
 <script>
 /* ============================================================
    APP — theme, nav, reveal, counters, console typing, ripple
@@ -1174,7 +1292,7 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
      ============================================================ */
   var I18N = {
     en: {
-      nav_profile:"PROFILE", nav_stack:"STACK", nav_work:"WORK", nav_build:"BUILD", nav_edu:"EDU", nav_certs:"CERTS", nav_contact:"CONTACT",
+      nav_profile:"PROFILE", nav_stack:"STACK", nav_work:"WORK", nav_build:"BUILD", nav_letter:"LETTER", nav_edu:"EDU", nav_certs:"CERTS", nav_contact:"CONTACT",
       hero_h1:"Backend &amp; Database <span>Engineer</span>,<br>built on Oracle &amp; Laravel.",
       hero_lede:"I'm Mohammed Muneer, an IT engineer in Jeddah, Saudi Arabia. I keep enterprise ERP systems running, write PL/SQL that holds up under load, and ship Laravel and Next.js backends that don't fall over.",
       btn_download:"Download Resume", btn_contact:"Contact Me",
@@ -1205,6 +1323,16 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       proj4_title:"Task &amp; Document Archive App", proj4_desc:"A mobile and web app for archiving files, memos and appointments, with built-in accounting entries to help organize daily tasks.",
       proj5_title:"HR AI Agent — Interviews &amp; Hiring Match", proj5_desc:"An AI agent that conducts candidate interviews and calculates a hiring-match score automatically based on the applicant's CV.",
       link_admin:"Admin", link_customer:"Customer App", link_supplier:"Supplier Portal", link_staff:"Staff Login", link_student:"Student Login", link_livedemo:"Live Demo", link_apk:"Download APK", link_apply:"Apply &amp; Track",
+      letter_h2:"Cover letter", letter_p:"A ready-to-send letter, customizable per application — printable on its own or together with the CV above.",
+      letter_role:"Application for Freelance Website Developer",
+      letter_salutation:"Dear Hiring Manager,",
+      letter_p1:"I'm writing to apply for the Freelance Website Developer position at <strong style=\"color:var(--text);\">Helf Group</strong>. I'm an IT engineer based in Jeddah who builds backend systems and web platforms end-to-end — from the database layer up through the interface — and I'd like to bring that same rigor to your projects.",
+      letter_p2:"Day to day, I work across Next.js and React on the front end, Laravel on the back end, and Oracle SQL/PL-SQL and MySQL underneath. In my current role supporting an enterprise ERP platform, I customize system reports, manage database deployments and migrations, and resolve issues directly with end-users — work that has sharpened both my technical judgment and my ability to explain it clearly to non-technical stakeholders.",
+      letter_p3:"Beyond my job, I've independently designed and shipped several multi-portal web systems: a salon management platform with separate admin, customer, and supplier apps; a university system with staff and student portals; an internal issue-tracking and e-archiving tool; and an AI-driven HR agent that scores candidates against a role. Each was built, deployed, and is in real use today — not just a prototype.",
+      letter_p4:"I understand the Saudi market, communicate comfortably in English, and work well independently on freelance, deadline-driven engagements. I'd welcome the chance to discuss how I can support Helf Group's growth with reliable, well-built websites.",
+      letter_p5:"Thank you for your time and consideration.",
+      letter_closing:"Sincerely,",
+      btn_print_letter:"Print Letter Only", btn_print_letter_cv:"Print Letter + CV",
       edu_h2:"Education", edu1_role:"Bachelor's Degree, Information Technology", edu1_sub:"University of Science and Technology — IT Department.",
       edu2_role:"Secondary School — Scientific Section", edu2_sub:"26 September School.",
       certs_h2:"Certifications &amp; courses", cert1_title:"Cyber Security", cert1_sub:"University of Science and Technology · 07/2023 – 08/2023",
@@ -1232,7 +1360,7 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       aria_email:"Email", aria_linkedin:"LinkedIn", aria_copy_phone:"Copy phone number", aria_copy_email:"Copy email address"
     },
     ar: {
-      nav_profile:"الملف", nav_stack:"المهارات", nav_work:"الخبرة", nav_build:"المشاريع", nav_edu:"التعليم", nav_certs:"الشهادات", nav_contact:"تواصل",
+      nav_profile:"الملف", nav_stack:"المهارات", nav_work:"الخبرة", nav_build:"المشاريع", nav_letter:"الخطاب", nav_edu:"التعليم", nav_certs:"الشهادات", nav_contact:"تواصل",
       hero_h1:"مهندس أنظمة خلفية <span>وقواعد بيانات</span>،<br>مبني على Oracle وLaravel.",
       hero_lede:"أنا محمد منير، مهندس تقنية معلومات في جدة، المملكة العربية السعودية. أحافظ على استقرار أنظمة ERP المؤسسية، وأكتب استعلامات PL/SQL تتحمل الضغط، وأبني أنظمة خلفية بلغة Laravel وNext.js لا تتعطل.",
       btn_download:"تحميل السيرة الذاتية", btn_contact:"تواصل معي",
@@ -1263,6 +1391,16 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
       proj4_title:"تطبيق أرشفة الملفات والمهام", proj4_desc:"تطبيق للجوال والويب لأرشفة الملفات والمذكرات والمواعيد، مع قيود محاسبية مدمجة تساعد على تنظيم المهام اليومية.",
       proj5_title:"وكيل ذكاء اصطناعي للموارد البشرية", proj5_desc:"وكيل ذكاء اصطناعي يجري مقابلات مع المتقدمين ويحسب نسبة التوظيف المناسبة تلقائيًا بناءً على السيرة الذاتية.",
       link_admin:"لوحة التحكم", link_customer:"تطبيق العملاء", link_supplier:"بوابة الموردين", link_staff:"دخول المدرّس", link_student:"دخول الطالب", link_livedemo:"عرض مباشر", link_apk:"تحميل التطبيق", link_apply:"تقديم ومتابعة",
+      letter_h2:"خطاب التقديم", letter_p:"خطاب جاهز للإرسال، قابل للتخصيص لكل وظيفة — يمكن طباعته بمفرده أو مع السيرة الذاتية أعلاه.",
+      letter_role:"طلب التقديم على وظيفة مطوّر مواقع مستقل",
+      letter_salutation:"السيد/ة مدير التوظيف المحترم،",
+      letter_p1:"أتقدم بطلبي لشغل وظيفة مطوّر مواقع مستقل لدى <strong style=\"color:var(--text);\">Helf Group</strong>. أنا مهندس تقنية معلومات مقيم في جدة، أبني الأنظمة الخلفية ومنصات الويب من الألف إلى الياء — بدءًا من طبقة قاعدة البيانات وصولًا إلى الواجهة — وأتطلع لتقديم الخبرة نفسها لمشاريعكم.",
+      letter_p2:"أعمل يوميًا على Next.js وReact في الواجهة الأمامية، وLaravel في الجزء الخلفي، وOracle SQL/PL-SQL وMySQL في قاعدة البيانات. في دوري الحالي في دعم نظام ERP مؤسسي، أخصص تقارير النظام، وأدير عمليات نشر وترحيل قواعد البيانات، وأحل المشاكل مباشرة مع المستخدمين النهائيين — وهو ما صقل حكمي التقني وقدرتي على شرحه بوضوح لغير المختصين.",
+      letter_p3:"إلى جانب عملي، صممت وأطلقت بشكل مستقل عدة أنظمة ويب متعددة البوابات: منصة إدارة صالونات ببوابات منفصلة للإدارة والعملاء والموردين، ونظام جامعي ببوابتي المدرّس والطالب، وأداة داخلية لتتبع المشاكل والأرشفة الإلكترونية، ووكيل ذكاء اصطناعي للموارد البشرية يقيّم المتقدمين مقابل الوظيفة. كل هذه الأنظمة مبنية ومنشورة وقيد الاستخدام الفعلي اليوم — وليست مجرد نماذج أولية.",
+      letter_p4:"أفهم طبيعة السوق السعودي، وأتواصل بارتياح باللغة الإنجليزية، وأعمل بكفاءة بشكل مستقل في المشاريع الحرة ذات المواعيد النهائية. يسعدني مناقشة كيف يمكنني دعم نمو Helf Group من خلال مواقع موثوقة ومبنية بعناية.",
+      letter_p5:"شاكرًا لكم وقتكم واهتمامكم.",
+      letter_closing:"مع خالص التقدير،",
+      btn_print_letter:"طباعة الخطاب فقط", btn_print_letter_cv:"طباعة الخطاب + السيرة الذاتية",
       edu_h2:"التعليم", edu1_role:"بكالوريوس تقنية المعلومات", edu1_sub:"جامعة العلوم والتكنولوجيا — قسم تقنية المعلومات.",
       edu2_role:"الثانوية العامة — القسم العلمي", edu2_sub:"مدرسة 26 سبتمبر.",
       certs_h2:"الشهادات والدورات", cert1_title:"الأمن السيبراني", cert1_sub:"جامعة العلوم والتكنولوجيا · 07/2023 – 08/2023",
@@ -1361,6 +1499,12 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
     ri = 0;
     cycleGen++;
     if(qEl){ runCycle(); }
+    var ld = document.getElementById('letterDate');
+    if(ld){
+      ld.textContent = currentLang === 'ar'
+        ? new Date().toLocaleDateString('ar-SA', { day:'numeric', month:'long', year:'numeric' })
+        : new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+    }
   });
 
   /* ---------- Mobile nav ---------- */
@@ -1521,6 +1665,37 @@ footer{ padding:44px 0; border-top:1px solid var(--border); }
   /* ---------- Download / Print resume ---------- */
   document.getElementById('downloadBtn').addEventListener('click', function(){ window.print(); });
   document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+
+  /* ---------- Cover letter: on-screen date + print buttons ---------- */
+  var todayEn = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+  var todayAr = new Date().toLocaleDateString('ar-SA', { day:'numeric', month:'long', year:'numeric' });
+  var letterDateEl = document.getElementById('letterDate');
+  if(letterDateEl){ letterDateEl.textContent = currentLang === 'ar' ? todayAr : todayEn; }
+  var printDateEnEl = document.getElementById('printLetterDateEn');
+  if(printDateEnEl){ printDateEnEl.textContent = todayEn; }
+  var printDateArEl = document.getElementById('printLetterDateAr');
+  if(printDateArEl){ printDateArEl.textContent = todayAr; }
+
+  function resetPrintClasses(){
+    document.body.classList.remove('print-letter', 'print-letter-cv');
+  }
+  window.addEventListener('afterprint', resetPrintClasses);
+
+  var printLetterOnlyBtn = document.getElementById('printLetterOnlyBtn');
+  if(printLetterOnlyBtn){
+    printLetterOnlyBtn.addEventListener('click', function(){
+      document.body.classList.add('print-letter');
+      document.body.classList.remove('print-letter-cv');
+      window.print();
+    });
+  }
+  var printLetterCvBtn = document.getElementById('printLetterCvBtn');
+  if(printLetterCvBtn){
+    printLetterCvBtn.addEventListener('click', function(){
+      document.body.classList.add('print-letter', 'print-letter-cv');
+      window.print();
+    });
+  }
 
   /* ---------- Footer year ---------- */
   document.getElementById('year').textContent = new Date().getFullYear();
